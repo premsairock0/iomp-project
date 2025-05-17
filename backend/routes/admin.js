@@ -2,6 +2,11 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin"); // fixed import
+const Student = require("../models/student");
+const Warden = require("../models/warden");
+const Chef = require("../models/chef");
+const adminAuth = require("../middlewares/admin");
+
 const router = express.Router();
 
 const JWT_SECRET = "12345";
@@ -70,5 +75,39 @@ router.post("/signin", async (req, res) => {
     return res.status(500).json({ message: "Server error" }); // 500 Internal Server Error
   }
 });
+
+// Get all student details
+router.get("/students", adminAuth, async (req, res) => {
+  try {
+    const students = await Student.find();
+    res.status(200).json({ students });
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get all warden details
+router.get("/wardens", adminAuth, async (req, res) => {
+  try {
+    const wardens = await Warden.find();
+    res.status(200).json({ wardens });
+  } catch (error) {
+    console.error("Error fetching wardens:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get all chef details
+router.get("/chefs", adminAuth, async (req, res) => {
+  try {
+    const chefs = await Chef.find();
+    res.status(200).json({ chefs });
+  } catch (error) {
+    console.error("Error fetching chefs:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;
