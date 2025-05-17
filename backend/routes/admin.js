@@ -6,6 +6,7 @@ const Student = require("../models/student");
 const Warden = require("../models/warden");
 const Chef = require("../models/chef");
 const adminAuth = require("../middlewares/admin");
+const Notification = require("../models/notification");
 
 const router = express.Router();
 
@@ -105,6 +106,66 @@ router.get("/chefs", adminAuth, async (req, res) => {
     res.status(200).json({ chefs });
   } catch (error) {
     console.error("Error fetching chefs:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Admin posts a new notification
+router.post("/notifications", adminAuth, async (req, res) => {
+  const { headline } = req.body;
+
+  if (!headline) {
+    return res.status(400).json({ message: "Headline is required" });
+  }
+
+  try {
+    const notification = new Notification({
+      headline,
+      postedBy: req.admin.admin_name,
+      role: "Admin"
+    });
+
+    await notification.save();
+    res.status(201).json({ message: "Notification posted by admin", notification });
+  } catch (error) {
+    console.error("Error posting admin notification:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+//admin can delete a notification
+
+router.put("/notifications/:id/close", adminAuth, async (req, res) => {
+  try {
+    const notification = await Notification.findById(req.params.id);
+
+    if (!notification) {
+      return res.status(404).json({ message: "Notification not found" });
+    }
+
+    // Only admins can close (we're already in admin.js and using adminAuth)
+    notification.isActive = false;
+    await notification.save();
+
+    res.status(200).json({
+      message: "Notification closed successfully",
+      notification,
+    });
+  } catch (error) {
+    console.error("Error closing notification:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+// admin can see the notifications 
+// Get all notifications
+router.get("/notifications", adminAuth, async (req, res) => {
+  try {
+    const notifications = await Notification.find().sort({ createdAt: -1 }); // newest first
+    res.status(200).json(notifications);
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
