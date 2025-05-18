@@ -14,14 +14,14 @@ const JWT_SECRET = "12345";
 
 // Admin Signup
 router.post("/signup", async (req, res) => {
-  const { admin_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!admin_name || !password) {
-    return res.status(400).json({ message: "Please provide admin_name and password" }); // 400 Bad Request
+  if (!username || !password) {
+    return res.status(400).json({ message: "Please provide username and password" }); // 400 Bad Request
   }
 
   try {
-    const existingAdmin = await Admin.findOne({ admin_name });
+    const existingAdmin = await Admin.findOne({ admin_name: username });
 
     if (existingAdmin) {
       return res.status(409).json({ message: "Admin already exists" }); // 409 Conflict
@@ -30,7 +30,7 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newAdmin = new Admin({
-      admin_name,
+      admin_name:username,
       password: hashedPassword,
     });
 
@@ -45,14 +45,14 @@ router.post("/signup", async (req, res) => {
 
 // Admin Signin
 router.post("/signin", async (req, res) => {
-  const { admin_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!admin_name || !password) {
-    return res.status(400).json({ message: "Please provide admin_name and password" }); // 400 Bad Request
+  if (!username|| !password) {
+    return res.status(400).json({ message: "Please provide username and password" }); // 400 Bad Request
   }
 
   try {
-    const admin = await Admin.findOne({ admin_name });
+    const admin = await Admin.findOne({ admin_name: username });
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" }); // 404 Not Found

@@ -11,14 +11,14 @@ const JWT_SECRET = "12345";
 
 // Warden Signup
 router.post("/signup", async (req, res) => {
-  const { warden_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!warden_name || !password) {
+  if (!username || !password) {
     return res.status(400).json({ message: "Please provide warden_name and password" });
   }
 
   try {
-    const existingWarden = await Warden.findOne({ warden_name });
+    const existingWarden = await Warden.findOne({ warden_name:username });
 
     if (existingWarden) {
       return res.status(409).json({ message: "Warden already exists" });
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newWarden = new Warden({
-      warden_name,
+      warden_name:username,
       password: hashedPassword,
     });
 
@@ -42,14 +42,14 @@ router.post("/signup", async (req, res) => {
 
 // Warden Signin
 router.post("/signin", async (req, res) => {
-  const { warden_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!warden_name || !password) {
+  if (!username || !password) {
     return res.status(400).json({ message: "Please provide warden_name and password" });
   }
 
   try {
-    const warden = await Warden.findOne({ warden_name });
+    const warden = await Warden.findOne({ warden_name:username });
 
     if (!warden) {
       return res.status(404).json({ message: "Warden not found" });

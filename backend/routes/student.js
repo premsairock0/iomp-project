@@ -52,14 +52,14 @@ router.post("/signup", async (req, res) => {
 
 // Student Signin
 router.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!email || !password) {
+  if (!username || !password) {
     return res.status(400).json({ message: "Please provide email and password" });
   }
 
   try {
-    const student = await Student.findOne({ email });
+    const student = await Student.findOne({ email:username });
 
     if (!student) {
       return res.status(404).json({ message: "Student not found" });

@@ -8,14 +8,14 @@ const JWT_SECRET = "12345";
 
 // Chef Signup
 router.post("/signup", async (req, res) => {
-  const { chef_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!chef_name || !password) {
+  if (!username || !password) {
     return res.status(400).json({ message: "Please provide chef_name and password" });
   }
 
   try {
-    const existingChef = await Chef.findOne({ chef_name });
+    const existingChef = await Chef.findOne({ chef_name:username });
 
     if (existingChef) {
       return res.status(409).json({ message: "Chef already exists" });
@@ -24,7 +24,7 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newChef = new Chef({
-      chef_name,
+      chef_name:username,
       password: hashedPassword,
     });
 
@@ -39,14 +39,14 @@ router.post("/signup", async (req, res) => {
 
 // Chef Signin
 router.post("/signin", async (req, res) => {
-  const { chef_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!chef_name || !password) {
+  if (!username || !password) {
     return res.status(400).json({ message: "Please provide chef_name and password" });
   }
 
   try {
-    const chef = await Chef.findOne({ chef_name });
+    const chef = await Chef.findOne({ chef_name:username });
 
     if (!chef) {
       return res.status(404).json({ message: "Chef not found" });
