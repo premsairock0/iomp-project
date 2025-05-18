@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Student = require("../models/student");
 const router = express.Router();
+const Notification = require("../models/notification");
+const studentAuth = require("../middlewares/student");
+
 
 const JWT_SECRET = "12345";
 
@@ -49,14 +52,14 @@ router.post("/signup", async (req, res) => {
 
 // Student Signin
 router.post("/signin", async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!email || !password) {
+  if (!username || !password) {
     return res.status(400).json({ message: "Please provide email and password" });
   }
 
   try {
-    const student = await Student.findOne({ email });
+    const student = await Student.findOne({ email:username });
 
     if (!student) {
       return res.status(404).json({ message: "Student not found" });
@@ -79,5 +82,17 @@ router.post("/signin", async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 });
+
+// Get all active notifications
+router.get("/notifications", studentAuth,async (req, res) => {
+  try {
+    const notifications = await Notification.find({ isActive: true }).sort({ createdAt: -1 });
+    res.status(200).json({ notifications });
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;

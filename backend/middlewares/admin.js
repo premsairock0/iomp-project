@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "12345";
 
 function verifyAdminToken(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1]; // Expecting "Bearer <token>"
+  const token = req.headers.authorization?.split(" ")[1] ; // Expecting "Bearer <token>"
 
   if (!token) {
     return res.status(401).json({ message: "Access denied. No token provided." });

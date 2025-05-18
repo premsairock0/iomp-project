@@ -2,20 +2,26 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin"); // fixed import
+const Student = require("../models/student");
+const Warden = require("../models/warden");
+const Chef = require("../models/chef");
+const adminAuth = require("../middlewares/admin");
+const Notification = require("../models/notification");
+
 const router = express.Router();
 
 const JWT_SECRET = "12345";
 
 // Admin Signup
 router.post("/signup", async (req, res) => {
-  const { admin_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!admin_name || !password) {
-    return res.status(400).json({ message: "Please provide admin_name and password" }); // 400 Bad Request
+  if (!username || !password) {
+    return res.status(400).json({ message: "Please provide username and password" }); // 400 Bad Request
   }
 
   try {
-    const existingAdmin = await Admin.findOne({ admin_name });
+    const existingAdmin = await Admin.findOne({ admin_name: username });
 
     if (existingAdmin) {
       return res.status(409).json({ message: "Admin already exists" }); // 409 Conflict
@@ -24,7 +30,7 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newAdmin = new Admin({
-      admin_name,
+      admin_name:username,
       password: hashedPassword,
     });
 
@@ -39,14 +45,14 @@ router.post("/signup", async (req, res) => {
 
 // Admin Signin
 router.post("/signin", async (req, res) => {
-  const { admin_name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!admin_name || !password) {
-    return res.status(400).json({ message: "Please provide admin_name and password" }); // 400 Bad Request
+  if (!username|| !password) {
+    return res.status(400).json({ message: "Please provide username and password" }); // 400 Bad Request
   }
 
   try {
-    const admin = await Admin.findOne({ admin_name });
+    const admin = await Admin.findOne({ admin_name: username });
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" }); // 404 Not Found
@@ -70,5 +76,99 @@ router.post("/signin", async (req, res) => {
     return res.status(500).json({ message: "Server error" }); // 500 Internal Server Error
   }
 });
+
+// Get all student details
+router.get("/students", adminAuth, async (req, res) => {
+  try {
+    const students = await Student.find();
+    res.status(200).json({ students });
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get all warden details
+router.get("/wardens", adminAuth, async (req, res) => {
+  try {
+    const wardens = await Warden.find();
+    res.status(200).json({ wardens });
+  } catch (error) {
+    console.error("Error fetching wardens:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get all chef details
+router.get("/chefs", adminAuth, async (req, res) => {
+  try {
+    const chefs = await Chef.find();
+    res.status(200).json({ chefs });
+  } catch (error) {
+    console.error("Error fetching chefs:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Admin posts a new notification
+router.post("/notifications", adminAuth, async (req, res) => {
+  const { headline } = req.body;
+
+  if (!headline) {
+    return res.status(400).json({ message: "Headline is required" });
+  }
+
+  try {
+    const notification = new Notification({
+      headline,
+      postedBy: req.admin.admin_name,
+      role: "Admin"
+    });
+
+    await notification.save();
+    res.status(201).json({ message: "Notification posted by admin", notification });
+  } catch (error) {
+    console.error("Error posting admin notification:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+//admin can delete a notification
+
+router.put("/notifications/:id/close", adminAuth, async (req, res) => {
+  try {
+    const notification = await Notification.findById(req.params.id);
+
+    if (!notification) {
+      return res.status(404).json({ message: "Notification not found" });
+    }
+
+    // Only admins can close (we're already in admin.js and using adminAuth)
+    notification.isActive = false;
+    await notification.save();
+
+    res.status(200).json({
+      message: "Notification closed successfully",
+      notification,
+    });
+  } catch (error) {
+    console.error("Error closing notification:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+// admin can see the notifications 
+// Get all notifications
+router.get("/notifications", adminAuth, async (req, res) => {
+  try {
+    const notifications = await Notification.find().sort({ createdAt: -1 }); // newest first
+    res.status(200).json(notifications);
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;
