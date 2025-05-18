@@ -3,11 +3,11 @@ const router = express.Router();
 
 const wardenAuth = require('../middlewares/warden');
 const Student = require('../models/student');
-const LeaveLetter = require('../models/letter');  
+const LeaveLetter = require('../models/LeaveLetter');  
 const Voting = require('../models/voting'); 
 
 // Get all students info (protected)
-router.get('/students', wardenAuth, async (req, res) => {
+router.get('/students', async (req, res) => {
   try {
     const students = await Student.find({});
     res.status(200).json({ students });

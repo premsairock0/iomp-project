@@ -1,8 +1,25 @@
+import React from "react";
+
 function Navbar() {
   return (
-    <nav className="navbar navbar-dark bg-dark sticky-top px-3">
-      <span className="navbar-brand mb-0 h1">Warden Dashboard</span>
+    <nav
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "56px",
+        backgroundColor: "#007bff",
+        color: "white",
+        display: "flex",
+        alignItems: "center",
+        paddingLeft: "20px",
+        zIndex: 1000,
+      }}
+    >
+      <h4>Warden Dashboard</h4>
     </nav>
   );
 }
+
 export default Navbar;
