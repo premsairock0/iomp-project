@@ -6,33 +6,37 @@ function Sidebar() {
 
   return (
     <div
-      style={{
-        width: "250px",
-        minHeight: "100vh",
-        backgroundColor: "#f1f1f1",
-        paddingTop: "56px", // leave space for fixed navbar
-        position: "fixed",
-        top: 0,
-        left: 0,
-        borderRight: "1px solid #ccc",
-      }}
+      className="fixed top-0 left-0 w-[200px] min-h-screen pt-14 border-r border-gray-300 shadow-md"
+      style={{ backgroundColor: "#f1f1f1" }} // light gray sidebar background
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          padding: "1rem",
-        }}
-      >
+      <div className="flex flex-col p-4 space-y-3">
         <button
-          className="btn btn-outline-primary mb-2"
+          className="font-medium py-2 px-4 rounded border border-transparent text-white transition duration-200"
+          style={{ backgroundColor: "#111" }}  // dark background
           onClick={() => navigate("/chef/dashboard/menu")}
+          onMouseOver={(e) => {
+            e.target.style.backgroundColor = "#38bdf8"; // sky blue bg on hover
+            e.target.style.color = "#000";              // black text on hover
+          }}
+          onMouseOut={(e) => {
+            e.target.style.backgroundColor = "#111"; // dark bg normal
+            e.target.style.color = "white";          // white text normal
+          }}
         >
           Menu
         </button>
+
         <button
-          className="btn btn-outline-primary mb-2"
-        //   onClick={() => navigate("/chef/dashboard/members")}
+          className="font-medium py-2 px-4 rounded border border-transparent text-white transition duration-200"
+          style={{ backgroundColor: "#111" }}
+          onMouseOver={(e) => {
+            e.target.style.backgroundColor = "#38bdf8";
+            e.target.style.color = "#000";
+          }}
+          onMouseOut={(e) => {
+            e.target.style.backgroundColor = "#111";
+            e.target.style.color = "white";
+          }}
         >
           Members
         </button>

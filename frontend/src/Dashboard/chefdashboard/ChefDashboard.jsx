@@ -10,7 +10,7 @@ function ChefDashboard() {
       <Sidebar />
       <main
         style={{
-          marginLeft: "250px",
+          marginLeft: "10px",
           marginTop: "56px",
           padding: "20px",
           backgroundColor: "#f8f9fa",
