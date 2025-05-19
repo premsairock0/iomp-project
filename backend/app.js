@@ -11,7 +11,9 @@ const student_router = require("./routes/student");
 const menu_router = require("./routes/menu");
 const dashchef_router = require("./routes/dashchef");
 const dashwarden_router = require("./routes/dashwarden");
+const dashadmin_router = require("./routes/dashadmin")
 const student_letter = require("./routes/studentsLetters");
+
 
 // ✅ Enable CORS for frontend (localhost:5173)
 // app.use(cors({
@@ -32,6 +34,7 @@ app.use("/api/menu", menu_router);
 app.use("/api/dashchef", dashchef_router);
 app.use("/api/dashwarden", dashwarden_router);
 app.use("/api/studentletters", student_letter);
+app.use("/api/dashadmin",dashadmin_router)
 
 
 // Test route

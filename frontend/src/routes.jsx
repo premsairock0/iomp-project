@@ -15,6 +15,10 @@ import StudentList from './Dashboard/wardendashboard/StudentList';
 import StudentLetters from './Dashboard/wardendashboard/StudentLetters';
 import Voting from './Dashboard/wardendashboard/Voting';
 import Menu from './Dashboard/chefdashboard/Menu';
+import Adminstudent from './Dashboard/admindashboard/Adminstudent';
+import Wardenslist from './Dashboard/admindashboard/Wardenslist' ;
+import Cheflist from './Dashboard/admindashboard/Cheflist' ;
+import Memberslist from './Dashboard/admindashboard/Memberslist'
 
 function AppRoutes() {
   return (
@@ -25,8 +29,17 @@ function AppRoutes() {
       <Route path="/login/:role" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/dashboard" element={<AdminDashboard />} >
+      <Route path="studentlist" element={<Adminstudent/>} />
+       <Route path="wardenlist" element={<Wardenslist/>} />
+        <Route path="cheflist" element={<Cheflist/>} />
+         <Route path="members" element={<Memberslist/>} />
+      </Route>
+
+
       <Route path="/student/dashboard" element={<StudentDashboard />} />
+
+
       <Route path="/chef/dashboard" element={<ChefDashboard />}>
          <Route path="menu" element={<Menu/>} />
       </Route>
