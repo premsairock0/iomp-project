@@ -22,6 +22,7 @@ function Menu() {
     })
       .then(async (res) => {
         const data = await res.json();
+        console.log(data)
 
         if (res.status === 401 || res.status === 403) {
           localStorage.removeItem("Authorization");
@@ -30,7 +31,7 @@ function Menu() {
           // === Changed this line ===
           // Previously you used: setMenu(data.Menu || []);
           // Now using data directly because backend sends array, not { Menu: [...] }
-          setMenu(data || []);
+          setMenu(data.Menu || []);
         } else {
           console.error("Failed to fetch menu:", data.message);
         }

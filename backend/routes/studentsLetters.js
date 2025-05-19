@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const LeaveLetter = require("../models/LeaveLetter"); // Adjust the path as needed
-
+const studentAuth = require("../middlewares/student");
+const wardenAuth = require("../middlewares/warden");
 // POST /api/letters - student sends a leave letter
-router.post("/", async (req, res) => {
+router.post("/",studentAuth,async (req, res) => {
   try {
     const { rollno, description } = req.body;
 
@@ -29,7 +30,7 @@ router.post("/", async (req, res) => {
 });
 
 // GET all leave letters
-router.get("/", async (req, res) => {
+router.get("/",wardenAuth ,async (req, res) => {
   try {
     const letters = await LeaveLetter.find().sort({ createdAt: -1 });
     res.json(letters);
@@ -39,7 +40,7 @@ router.get("/", async (req, res) => {
 });
 
 // PUT /api/studentletters/:id to update approval
-router.put("/:id", async (req, res) => {
+router.put("/:id", wardenAuth,async (req, res) => {
   try {
     const { approved } = req.body;
     const letter = await LeaveLetter.findByIdAndUpdate(

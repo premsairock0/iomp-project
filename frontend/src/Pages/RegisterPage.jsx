@@ -93,7 +93,7 @@ export default function RegisterPage() {
           <input name="address" value={formData.address} onChange={handleChange} placeholder="Address" className="col-span-2 p-3 border rounded" />
           <input name="rollno" value={formData.rollno} onChange={handleChange} placeholder="Roll No" className="col-span-1 p-3 border rounded" />
           <input name="department" value={formData.department} onChange={handleChange} placeholder="Department" className="col-span-1 p-3 border rounded" />
-          <input name="roomno" value={formData.roomno} onChange={handleChange} placeholder="Room No (optional)" className="col-span-1 p-3 border rounded" />
+          {/* <input name="roomno" value={formData.roomno} onChange={handleChange} placeholder="Room No (optional)" className="col-span-1 p-3 border rounded" /> */}
           <div className="col-span-1 flex items-center">
             <input name="messopted" type="checkbox" checked={formData.messopted} onChange={handleChange} className="mr-2" /> Mess Opted
           </div>
