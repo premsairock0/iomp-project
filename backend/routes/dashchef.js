@@ -7,7 +7,7 @@ const verifyChefToken = require("../middlewares/chef"); // adjust path as needed
 router.get("/menu", verifyChefToken, async (req, res) => {
   try {
     const menus = await Menu.find({});
-    res.status(200).json(menus);
+    res.status(200).json({ Menu: menus });
   } catch (err) {
     res.status(500).json({ message: "Error fetching menus", error: err.message });
   }

@@ -9,7 +9,7 @@ const chefSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  },
+  }
 });
 
 module.exports = mongoose.model('Chef', chefSchema);
