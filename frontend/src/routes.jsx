@@ -19,7 +19,15 @@ import Adminstudent from './Dashboard/admindashboard/Adminstudent';
 import Wardenslist from './Dashboard/admindashboard/Wardenslist' ;
 import Cheflist from './Dashboard/admindashboard/Cheflist' ;
 import Memberslist from './Dashboard/admindashboard/Memberslist';
-import UploadPhoto from './Dashboard/admindashboard/UploadPhoto'
+import UploadPhoto from './Dashboard/admindashboard/UploadPhoto';
+
+import Profile from './Dashboard/studentdashboard/Profile';
+import Studentleave from './Dashboard/studentdashboard/Studentleave';
+import Studentmembers from './Dashboard/studentdashboard/Studentmembers';
+import Studentmenu from './Dashboard/studentdashboard/Studentmenu';
+import Services from './Dashboard/studentdashboard/Services';
+import Notifications from './Dashboard/studentdashboard/Notifications';
+import Castvote from './Dashboard/studentdashboard/Castvote';
 
 function AppRoutes() {
   return (
@@ -39,7 +47,15 @@ function AppRoutes() {
       </Route>
 
 
-      <Route path="/student/dashboard" element={<StudentDashboard />} />
+      <Route path="/student/dashboard" element={<StudentDashboard />} >
+       <Route path="profile" element={<Profile/>} />
+         <Route path="members" element={<Studentmembers/>} /> 
+          <Route path="menu" element={<Studentmenu/>} />
+            <Route path="notifications" element={<Notifications/>} />
+              <Route path="vote" element={<Castvote/>} />
+                <Route path="leave" element={<Studentleave/>} />
+                  <Route path="services" element={<Services/>} />
+      </Route>
 
 
       <Route path="/chef/dashboard" element={<ChefDashboard />}>
