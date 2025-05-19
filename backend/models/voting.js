@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-
+const student=require("./student")
 const votingSchema = new mongoose.Schema({
   studentIds: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student',
+    ref: 'student',
     required: true,
   }],
   postedAt: {

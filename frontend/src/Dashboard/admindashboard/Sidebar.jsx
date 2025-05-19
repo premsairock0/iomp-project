@@ -48,6 +48,12 @@ function Sidebar() {
         >
           Members
         </button>
+        <button
+          className="btn btn-outline-primary mb-2"
+          onClick={() => navigate("/admin/dashboard/uploadPhoto")}
+        >
+          upload photo
+        </button>
       </div>
     </div>
   );

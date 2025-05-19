@@ -18,7 +18,8 @@ import Menu from './Dashboard/chefdashboard/Menu';
 import Adminstudent from './Dashboard/admindashboard/Adminstudent';
 import Wardenslist from './Dashboard/admindashboard/Wardenslist' ;
 import Cheflist from './Dashboard/admindashboard/Cheflist' ;
-import Memberslist from './Dashboard/admindashboard/Memberslist'
+import Memberslist from './Dashboard/admindashboard/Memberslist';
+import UploadPhoto from './Dashboard/admindashboard/uploadPhoto'
 
 function AppRoutes() {
   return (
@@ -34,6 +35,7 @@ function AppRoutes() {
        <Route path="wardenlist" element={<Wardenslist/>} />
         <Route path="cheflist" element={<Cheflist/>} />
          <Route path="members" element={<Memberslist/>} />
+         <Route path="uploadPhoto" element={<UploadPhoto/>} />
       </Route>
 
 

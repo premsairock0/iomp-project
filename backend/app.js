@@ -13,6 +13,7 @@ const dashchef_router = require("./routes/dashchef");
 const dashwarden_router = require("./routes/dashwarden");
 const dashadmin_router = require("./routes/dashadmin")
 const student_letter = require("./routes/studentsLetters");
+const photos = require("./routes/photo");
 
 
 // ✅ Enable CORS for frontend (localhost:5173)
@@ -35,7 +36,7 @@ app.use("/api/dashchef", dashchef_router);
 app.use("/api/dashwarden", dashwarden_router);
 app.use("/api/studentletters", student_letter);
 app.use("/api/dashadmin",dashadmin_router)
-
+app.use("/api/photos",photos)
 
 // Test route
 app.get("/", (req, res) => {
