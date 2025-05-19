@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 function WardenDashboard() {
   return (
     <div>
-      <Navbar />
+      <Navbar role={"Warden Dashboard"} />
       <Sidebar />
       <main
         style={{

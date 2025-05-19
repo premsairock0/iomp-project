@@ -1,6 +1,6 @@
 import React from "react";
 
-function Navbar() {
+function Navbar({role}) {
   return (
     <nav
       style={{
@@ -17,7 +17,7 @@ function Navbar() {
         zIndex: 1000,
       }}
     >
-      <h4>Warden Dashboard</h4>
+      <h4>{role}</h4>
     </nav>
   );
 }
