@@ -1,127 +1,90 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function StudentLetters() {
-  const [letters, setLetters] = useState([]);
-  const [error, setError] = useState(null);
+function Adminstudent() {
+  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchLetters();
+    const fetchStudents = async () => {
+      const token = localStorage.getItem('Authorization');
+
+      if (!token) {
+        setError('No token found');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/admin/students', {
+          method: 'GET',
+          headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          setError(data.message || 'Failed to fetch students');
+        } else {
+          setStudents(data.students);
+        }
+      } catch (err) {
+        setError('Something went wrong');
+        console.error('Fetch error:', err);
+      }
+
+      setLoading(false);
+    };
+
+    fetchStudents();
   }, []);
 
-  const fetchLetters = async () => {
-    const token = localStorage.getItem("Authorization");
-
-    if (!token) {
-      setError("No token found");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const res = await fetch("http://localhost:3000/api/studentletters", {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.message || "Failed to fetch letters");
-      } else {
-        setLetters(data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch letters:", error);
-      setError("Something went wrong while fetching letters");
-    }
-
-    setLoading(false);
-  };
-
-  const handleAction = async (id, approved) => {
-    const token = localStorage.getItem("Authorization");
-
-    if (!token) {
-      setError("No token found");
-      return;
-    }
-
-    try {
-      const res = await fetch(`http://localhost:3000/api/studentletters/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ approved }),
-      });
-
-      if (!res.ok) throw new Error("Failed to update letter");
-
-      fetchLetters(); // Refresh after update
-    } catch (err) {
-      console.error("Failed to update letter:", err);
-      setError("Error updating letter");
-    }
-  };
+//   const handleLogout = () => {
+//     localStorage.removeItem('Authorization');
+//     navigate('/'); // Adjust this path based on your route setup
+//   };
 
   return (
-    <div style={{ marginLeft: "260px", padding: "1rem" }}>
-      <h2>Student Letters</h2>
+    <div className="p-6">
+      {/* <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div> */}
 
-      {loading && <p>Loading...</p>}
-      {error && <p className="text-danger">{error}</p>}
-
-      <div className="row">
-        {letters.map((letter) => (
-          <div
-            key={letter._id}
-            className="card col-md-4 m-2 p-3 shadow-sm"
-            style={{ minHeight: "auto" }}
-          >
-            <div className="card-body">
-              <h5 className="card-title">Roll No: {letter.rollno}</h5>
-              <p className="card-text">{letter.description}</p>
-              <p className="card-text text-muted">
-                Submitted: {new Date(letter.createdAt).toLocaleString()}
-              </p>
-              <p>
-                Status: <strong>{letter.approved ? "Approved" : "Pending"}</strong>
-              </p>
-              {!letter.approved && (
-                <>
-                  <button
-                    className="btn btn-sm me-2"
-                    style={{
-                      backgroundColor: "#28a745",
-                      color: "white",
-                      borderRadius: "8px",
-                    }}
-                    onClick={() => handleAction(letter._id, true)}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    className="btn btn-sm"
-                    style={{
-                      backgroundColor: "#dc3545",
-                      color: "white",
-                      borderRadius: "8px",
-                    }}
-                    onClick={() => handleAction(letter._id, false)}
-                  >
-                    Reject
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <p>Loading students...</p>
+      ) : error ? (
+        <p className="text-red-600">{error}</p>
+      ) : (
+        <div className="grid gap-4">
+          {students.length === 0 ? (
+            <p>No students found.</p>
+          ) : (
+            students.map((student) => (
+              <div
+                key={student._id}
+                className="bg-white p-4 rounded shadow-md"
+              >
+                <p><strong>ID:</strong> {student._id}</p>
+                <p><strong>Name:</strong> {student.username}</p>
+                <p><strong>Email:</strong> {student.email}</p>
+              </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-export default StudentLetters;
+export default Adminstudent;
