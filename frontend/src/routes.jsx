@@ -19,7 +19,7 @@ import Adminstudent from './Dashboard/admindashboard/Adminstudent';
 import Wardenslist from './Dashboard/admindashboard/Wardenslist' ;
 import Cheflist from './Dashboard/admindashboard/Cheflist' ;
 import Memberslist from './Dashboard/admindashboard/Memberslist';
-import UploadPhoto from './Dashboard/admindashboard/uploadPhoto'
+import UploadPhoto from './Dashboard/admindashboard/UploadPhoto'
 
 function AppRoutes() {
   return (
