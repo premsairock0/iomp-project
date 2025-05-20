@@ -47,7 +47,7 @@ function Menu() {
   if (loading) return <p>Loading menu...</p>;
 
   return (
-    <div style={{ marginLeft: "250px", marginTop: "56px", padding: "20px" }}>
+    <div style={{ marginLeft: "200px", marginTop: "0px", padding: "20px" }}>
     <h2 className="text-3xl font-bold text-indigo-700 mb-6 border-b-4 border-indigo-500 pb-2">
       Mess Menu
     </h2>
