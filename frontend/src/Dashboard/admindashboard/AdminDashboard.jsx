@@ -11,7 +11,7 @@ function AdminDashboard() {
       <main
         style={{
           marginLeft: "250px",
-          marginTop: "56px",
+          marginTop: "30px",
           padding: "20px",
           backgroundColor: "#f8f9fa",
           minHeight: "100vh",

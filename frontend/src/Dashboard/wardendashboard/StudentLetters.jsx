@@ -70,7 +70,7 @@ function StudentLetters() {
   };
 
   return (
-    <div style={{ marginLeft: "260px", padding: "1rem" }}>
+    <div style={{ marginLeft: "0px", padding: "1rem" }}>
       <h2>Student Letters</h2>
 
       {loading && <p>Loading...</p>}
@@ -78,8 +78,8 @@ function StudentLetters() {
 
       <div className="row">
         {letters.map((letter) => (
-          <div key={letter._id} className="card col-md-4 m-2 p-3 shadow-sm">
-            <div className="card-body d-flex flex-column justify-content-between h-100">
+          <div key={letter._id} className="card col-md-5 m-2 p-7 shadow-sm">
+            <div className="card-body d-flex flex-column justify-content-between h-25">
               <div>
                 <h5 className="card-title">Roll No: {letter.rollno}</h5>
                 <p className="card-text">{letter.description}</p>

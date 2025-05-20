@@ -30,6 +30,7 @@ import Notifications from './Dashboard/studentdashboard/Notifications';
 import Castvote from './Dashboard/studentdashboard/Castvote';
 import StudentHolidays from './Dashboard/studentdashboard/StudentHolidays';
 import MessBill from "./Dashboard/studentdashboard/MessBill";
+import AdminHolidays from './Dashboard/admindashboard/Adminholidays';
 
 function AppRoutes() {
   return (
@@ -46,6 +47,7 @@ function AppRoutes() {
         <Route path="cheflist" element={<Cheflist/>} />
          <Route path="members" element={<Memberslist/>} />
          <Route path="uploadPhoto" element={<UploadPhoto/>} />
+          <Route path="calender" element={<AdminHolidays/>}/>
       </Route>
 
 
@@ -65,6 +67,7 @@ function AppRoutes() {
       <Route path="/chef/dashboard" element={<ChefDashboard />}>
          <Route path="menu" element={<Menu/>} />
          <Route path="members" element={<Studentmembers/>} />
+         <Route path="calender" element={<StudentHolidays/>}/>
       </Route>
 
       <Route path="/warden/dashboard" element={<WardenDashboard />}>
