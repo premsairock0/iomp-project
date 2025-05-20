@@ -28,6 +28,8 @@ import Studentmenu from './Dashboard/studentdashboard/Studentmenu';
 import Services from './Dashboard/studentdashboard/Services';
 import Notifications from './Dashboard/studentdashboard/Notifications';
 import Castvote from './Dashboard/studentdashboard/Castvote';
+import StudentHolidays from './Dashboard/studentdashboard/StudentHolidays';
+import MessBill from "./Dashboard/studentdashboard/MessBill";
 
 function AppRoutes() {
   return (
@@ -55,6 +57,8 @@ function AppRoutes() {
               <Route path="vote" element={<Castvote/>} />
                 <Route path="leave" element={<Studentleave/>} />
                   <Route path="services" element={<Services/>} />
+                  <Route path='holidays' element={<StudentHolidays />} />
+                  <Route path="/student/dashboard/mess-bill" element={<MessBill />} />
       </Route>
 
 

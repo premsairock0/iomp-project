@@ -5,25 +5,47 @@ const Student = require("../models/student");
 const router = express.Router();
 const Notification = require("../models/notification");
 const studentAuth = require("../middlewares/student");
-
+const MessBill = require("../models/MessBill"); // ✅ Added this line
 
 const JWT_SECRET = "12345";
 
 // Student Signup
 router.post("/signup", async (req, res) => {
-  const { username, email, phone, password, typeofstudent, address, rollno, department, year } = req.body;
+  const {
+    username,
+    email,
+    phone,
+    password,
+    typeofstudent,
+    address,
+    rollno,
+    department,
+    year
+  } = req.body;
 
-  if (!username || !email || !phone || !password || !typeofstudent || !address || !rollno || !department || !year) {
+  if (
+    !username ||
+    !email ||
+    !phone ||
+    !password ||
+    !typeofstudent ||
+    !address ||
+    !rollno ||
+    !department ||
+    !year
+  ) {
     return res.status(400).json({ message: "Please fill all required fields" });
   }
 
- try {
-  const existingStudent = await Student.findOne({ email });
+  try {
+    const existingStudent = await Student.findOne({ email });
 
-  if (existingStudent) {
-    return res.status(409).json({ message: "Student already exists with this email" });
-  }
- 
+    if (existingStudent) {
+      return res
+        .status(409)
+        .json({ message: "Student already exists with this email" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const studentData = {
@@ -36,11 +58,20 @@ router.post("/signup", async (req, res) => {
       rollno,
       department,
       year,
-      messopted: typeofstudent === 'Hosteller'
+      messopted: typeofstudent === "Hosteller" // ✅ auto-messopted for hostellers
     };
 
     const newStudent = new Student(studentData);
     await newStudent.save();
+
+    // ✅ Create mess bill record if student opted for mess
+    if (newStudent.messopted) {
+      await MessBill.create({
+        student: newStudent._id,
+        isPaid: false,
+        paymentDate: null
+      });
+    }
 
     return res.status(201).json({ message: "Student registered successfully" });
   } catch (error) {
@@ -49,17 +80,18 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-
 // Student Signin
 router.post("/signin", async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ message: "Please provide email and password" });
+    return res
+      .status(400)
+      .json({ message: "Please provide email and password" });
   }
 
   try {
-    const student = await Student.findOne({ email:username });
+    const student = await Student.findOne({ email: username });
 
     if (!student) {
       return res.status(404).json({ message: "Student not found" });
@@ -72,8 +104,12 @@ router.post("/signin", async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: student._id, rollno: student.rollno, typeofstudent: student.typeofstudent },
-      JWT_SECRET,
+      {
+        id: student._id,
+        rollno: student.rollno,
+        typeofstudent: student.typeofstudent
+      },
+      JWT_SECRET
     );
 
     return res.status(200).json({ message: "Signin successful", token });
@@ -84,9 +120,11 @@ router.post("/signin", async (req, res) => {
 });
 
 // Get all active notifications
-router.get("/notifications", studentAuth,async (req, res) => {
+router.get("/notifications", studentAuth, async (req, res) => {
   try {
-    const notifications = await Notification.find({ isActive: true }).sort({ createdAt: -1 });
+    const notifications = await Notification.find({ isActive: true }).sort({
+      createdAt: -1
+    });
     res.status(200).json({ notifications });
   } catch (error) {
     console.error("Error fetching notifications:", error);
@@ -94,5 +132,18 @@ router.get("/notifications", studentAuth,async (req, res) => {
   }
 });
 
+// Get logged-in student's details
+router.get("/me", studentAuth, async (req, res) => {
+  try {
+    const student = await Student.findById(req.student.id).select("-password");
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.status(200).json({ student });
+  } catch (error) {
+    console.error("Error fetching student details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;

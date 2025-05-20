@@ -29,14 +29,14 @@ function Sidebar() {
       >
         {[
           { label: "Profile", path: "/student/dashboard/profile" },
-          { label: "Members", path: "/student/dashboard/members" }, 
-           { label: "Notifications", path: "/student/dashboard/notifications" },
-           { label: "Menu", path: "/student/dashboard/menu" },
+          { label: "Members", path: "/student/dashboard/members" },
+          { label: "Notifications", path: "/student/dashboard/notifications" },
+          { label: "Menu", path: "/student/dashboard/menu" },
           { label: "Cast Vote", path: "/student/dashboard/vote" },
           { label: "Leave Letter", path: "/student/dashboard/leave" },
           { label: "Services", path: "/student/dashboard/services" },
-          
-        
+          { label: "Student Holidays", path: "/student/dashboard/holidays" },
+          {label: "Mess Bill", path: "/student/dashboard/mess-bill"}, 
         ].map((item, index) => (
           <button
             key={index}

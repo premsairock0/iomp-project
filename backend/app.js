@@ -15,6 +15,9 @@ const dashadmin_router = require("./routes/dashadmin");
 const dashstudent_router = require("./routes/dashstudent");
 const student_letter = require("./routes/studentsLetters");
 const photos = require("./routes/photo");
+const holiday_router = require("./routes/holidayRoute");
+const messBill_router = require("./routes/messBill");
+
 
 
 // ✅ Enable CORS for frontend (localhost:5173)
@@ -38,9 +41,9 @@ app.use("/api/dashwarden", dashwarden_router);
 app.use("/api/studentletters", student_letter);
 app.use("/api/dashadmin",dashadmin_router);
 app.use("/api/dashstudent",dashstudent_router);
-
+app.use("/api/holidays", holiday_router);
 app.use("/api/photos",photos)
-
+app.use("/api/mess", messBill_router);
 // Test route
 app.get("/", (req, res) => {
   res.send("I am working");
