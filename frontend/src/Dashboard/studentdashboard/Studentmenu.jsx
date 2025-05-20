@@ -24,7 +24,7 @@ function Studentmenu() {
         const data = await res.json();
         if (res.status === 401 || res.status === 403) {
           localStorage.removeItem("Authorization");
-          navigate("/login/student");
+          navigate("/login/chef");
         } else if (res.ok) {
           setMenu(data.Menu || []);
         } else {
@@ -42,14 +42,12 @@ function Studentmenu() {
     setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-  if (loading) return <p className="text-center mt-10 text-xl">Loading menu...</p>;
+  if (loading) return <p className="text-center mt-10 text-gray-600">Loading menu...</p>;
 
   return (
-    <div style={{ marginLeft: "0px", marginTop: "4px", padding: "20px" }}>
-      <h2 className="text-3xl font-bold text-indigo-700 mb-6 border-b-4 border-indigo-500 pb-2">
-        Mess Menu
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div className="ml-[250px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Mess Menu</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {menu.length > 0 ? (
           menu.map((item, index) => (
             <div
@@ -64,7 +62,7 @@ function Studentmenu() {
                 <div className="relative overflow-hidden h-52">
                   <img
                     src={item.photo}
-                    alt={item.title}
+                    alt={item.title || "Menu Image"}
                     className="w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-110 hover:rotate-1"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -92,6 +90,7 @@ function Studentmenu() {
                     {item.description.length > 120 && (
                       <button
                         onClick={() => toggleExpand(index)}
+                        aria-expanded={expanded[index] ?? false}
                         className="mt-3 text-indigo-600 hover:text-indigo-800 font-semibold self-start"
                       >
                         {expanded[index] ? "Show Less ▲" : "Read More ▼"}
@@ -108,35 +107,6 @@ function Studentmenu() {
           </p>
         )}
       </div>
-
-      <style>
-        {`
-          @keyframes fadeInUp {
-            0% {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          .animate-fadeInUp {
-            animation: fadeInUp 0.6s ease forwards;
-          }
-          @keyframes bounce-slow {
-            0%, 100% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(-6px);
-            }
-          }
-          .animate-bounce-slow {
-            animation: bounce-slow 2.5s infinite ease-in-out;
-          }
-        `}
-      </style>
     </div>
   );
 }
