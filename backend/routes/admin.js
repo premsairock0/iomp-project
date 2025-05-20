@@ -133,6 +133,10 @@ router.post("/notifications", adminAuth, async (req, res) => {
   }
 });
 
+//change password
+
+
+
 //admin can delete a notification
 
 router.put("/notifications/:id/close", adminAuth, async (req, res) => {

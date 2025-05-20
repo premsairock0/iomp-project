@@ -31,6 +31,7 @@ import Castvote from './Dashboard/studentdashboard/Castvote';
 import StudentHolidays from './Dashboard/studentdashboard/StudentHolidays';
 import MessBill from "./Dashboard/studentdashboard/MessBill";
 import AdminHolidays from './Dashboard/admindashboard/Adminholidays';
+import Changepassword from './Dashboard/admindashboard/Changepassword';
 
 function AppRoutes() {
   return (
@@ -48,6 +49,8 @@ function AppRoutes() {
          <Route path="members" element={<Memberslist/>} />
          <Route path="uploadPhoto" element={<UploadPhoto/>} />
           <Route path="calender" element={<AdminHolidays/>}/>
+      <Route path="password" element={<Changepassword/>}/>
+
       </Route>
 
 
