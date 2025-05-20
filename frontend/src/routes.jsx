@@ -47,7 +47,7 @@ function AppRoutes() {
       <Route path="studentlist" element={<Adminstudent/>} />
        <Route path="wardenlist" element={<Wardenslist/>} />
         <Route path="cheflist" element={<Cheflist/>} />
-         <Route path="members" element={<Memberslist/>} />
+         <Route path="members" element={<Studentmembers/>} />
          <Route path="uploadPhoto" element={<UploadPhoto/>} />
           <Route path="calender" element={<AdminHolidays/>}/>
       <Route path="password" element={<Changepassword/>}/>
