@@ -64,6 +64,7 @@ function AppRoutes() {
 
       <Route path="/chef/dashboard" element={<ChefDashboard />}>
          <Route path="menu" element={<Menu/>} />
+         <Route path="members" element={<Studentmembers/>} />
       </Route>
 
       <Route path="/warden/dashboard" element={<WardenDashboard />}>

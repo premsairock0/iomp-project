@@ -33,6 +33,7 @@ function Sidebar() {
             e.target.style.backgroundColor = "#38bdf8";
             e.target.style.color = "#000";
           }}
+          onClick={() => navigate("/chef/dashboard/members")}
           onMouseOut={(e) => {
             e.target.style.backgroundColor = "#111";
             e.target.style.color = "white";
