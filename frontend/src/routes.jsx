@@ -38,6 +38,8 @@ import VotingResults from './Dashboard/wardendashboard/VotingResults';
 import Studentpassword from './Dashboard/studentdashboard/Studentpassword';
 import Chefpassword from './Dashboard/chefdashboard/Chefpassword';
 import Wardenpassword from './Dashboard/wardendashboard/Wardenpassword'
+import LatestUpdate from './Dashboard/studentdashboard/LatestUpdate'
+
 
 function AppRoutes() {
   return (
@@ -64,6 +66,7 @@ function AppRoutes() {
 
 
       <Route path="/student/dashboard" element={<StudentDashboard />} >
+            <Route path="latest-update" element={<LatestUpdate/>} />
        <Route path="profile" element={<Profile/>} />
          <Route path="members" element={<Studentmembers/>} /> 
           <Route path="menu" element={<Studentmenu/>} />

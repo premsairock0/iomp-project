@@ -28,6 +28,7 @@ function Sidebar() {
         }}
       >
         {[
+          { label: "Latest update", path: "/student/dashboard/latest-update" },
           { label: "Profile", path: "/student/dashboard/profile" },
           { label: "Members", path: "/student/dashboard/members" },
           { label: "Notifications", path: "/student/dashboard/notifications" },
@@ -37,7 +38,6 @@ function Sidebar() {
           { label: "Services", path: "/student/dashboard/services" },
           { label: "Student Holidays", path: "/student/dashboard/holidays" },
           {label: "Mess Bill", path: "/student/dashboard/mess-bill"}, 
-             { label: "Change password", path: "/student/dashboard/password" },
         ].map((item, index) => (
           <button
             key={index}
