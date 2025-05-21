@@ -33,6 +33,7 @@ import MessBill from "./Dashboard/studentdashboard/MessBill";
 import AdminHolidays from './Dashboard/admindashboard/Adminholidays';
 import Changepassword from './Dashboard/admindashboard/Changepassword';
 import Events from './Dashboard/admindashboard/Events';
+import VotingResults from './Dashboard/wardendashboard/VotingResults'
 
 function AppRoutes() {
   return (
@@ -78,6 +79,7 @@ function AppRoutes() {
           <Route path="students" element={<StudentList />} />
           <Route path="letters" element={<StudentLetters />} />
           <Route path="voting" element={<Voting />} />
+          <Route path="voting-results" element={<VotingResults />} />
         </Route>
 
       <Route path="*" element={<h1 className="text-center mt-10 text-red-500 text-xl">404 - Page Not Found</h1>} />

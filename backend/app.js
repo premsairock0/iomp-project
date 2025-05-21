@@ -2,6 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 require("./connect/connect");
+const session = require("express-session");//session
+
+app.use(session({
+  secret: "your-secret-key", // Use a secure secret in production!
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false, // Set to true if using HTTPS
+    sameSite: "lax" // Or 'none' if frontend is on different origin and HTTPS
+  }
+}));
 
 // Import routers
 const admin_router = require("./routes/admin");
@@ -19,6 +31,10 @@ const event = require("./routes/event");
 const holiday_router = require("./routes/holidayRoute");
 const messBill_router = require("./routes/messBill");
 const selectedStudents = require('./routes/selectedStudents');
+const voteRouter = require('./routes/vote');
+const results=require('./routes/results');
+// const votedetails=require('./routes/results');
+
 
 
 // ✅ Enable CORS for frontend (localhost:5173)
@@ -27,7 +43,11 @@ const selectedStudents = require('./routes/selectedStudents');
 //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 //   credentials: true // only if needed
 // }));
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // Use your React frontend URL
+  credentials: true
+}));
+
 
 app.use(express.json()); // Middleware to parse JSON bodies
 
@@ -47,6 +67,9 @@ app.use("/api/photos",photos)
 app.use("/api/mess", messBill_router);
 app.use("/api/event",event);
 app.use("/api/selectedstudents",selectedStudents);
+app.use("/api/vote", voteRouter);
+app.use("/api/vote",results);
+// app.use("/api/votedetails",votedetails);
 // Test route
 app.get("/", (req, res) => {
   res.send("I am working");

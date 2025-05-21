@@ -133,6 +133,7 @@ router.get("/notifications", studentAuth, async (req, res) => {
 });
 
 // Get logged-in student's details
+// Protected route
 router.get("/me", studentAuth, async (req, res) => {
   try {
     const student = await Student.findById(req.student.id).select("-password");
@@ -145,5 +146,6 @@ router.get("/me", studentAuth, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 module.exports = router;
