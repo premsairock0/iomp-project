@@ -3,6 +3,8 @@ const cors = require('cors');
 const app = express();
 require("./connect/connect");
 
+
+
 // Import routers
 const admin_router = require("./routes/admin");
 const warden_router = require("./routes/warden");
@@ -19,6 +21,8 @@ const event = require("./routes/event");
 const holiday_router = require("./routes/holidayRoute");
 const messBill_router = require("./routes/messBill");
 const selectedStudents = require('./routes/selectedStudents');
+const voteRouter = require('./routes/vote');
+const results=require('./routes/results');
 
 
 
@@ -49,6 +53,8 @@ app.use("/api/photos",photos)
 app.use("/api/mess", messBill_router);
 app.use("/api/event",event);
 app.use("/api/selectedstudents",selectedStudents);
+app.use("/api/vote", voteRouter);
+app.use("/api/vote",results);
 
 // Test route
 app.get("/", (req, res) => {
