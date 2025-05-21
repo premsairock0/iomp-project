@@ -75,7 +75,7 @@ function MessBill() {
 
   return (
     <>
-      <div style={{ marginLeft: "270px", padding: "2rem" }}>
+      <div style={{ marginLeft: "0px", marginTop: "10px", padding: "2rem" }}>
         <div
           style={{
             backgroundColor: "#f8f9fa",

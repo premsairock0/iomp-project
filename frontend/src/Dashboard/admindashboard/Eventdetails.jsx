@@ -9,12 +9,13 @@ function Eventdetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/event/getevent/${id}`)
-      .then(res => {
+    axios
+      .get(`http://localhost:3000/api/event/getevent/${id}`)
+      .then((res) => {
         setEvent(res.data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         setLoading(false);
       });
@@ -37,47 +38,53 @@ function Eventdetails() {
   }
 
   return (
-    <div 
-      className="fixed top-0 right-0 bottom-0 overflow-auto bg-white z-50 p-4 sm:p-6 md:p-10"
-      style={{ left: '250px' }} // leave space for sidebar width
+    <div
+      className="fixed top-0 right-0 bottom-0 overflow-auto bg-white z-50"
+      style={{ left: "250px" }} // leave space for sidebar width
     >
-      {/* Back Button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="mb-4 sm:mb-6 flex items-center text-indigo-600 hover:text-indigo-800 font-semibold"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 mr-2"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
+      <div className="p-4 sm:p-6 md:p-10 mt-11">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-4 sm:mb-6 flex items-center text-indigo-600 hover:text-indigo-800 font-semibold"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-        Back
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
 
-      {/* Title */}
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">{event.eventtitle}</h2>
+        {/* Title */}
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
+          {event.eventtitle}
+        </h2>
 
-      {/* Image */}
-      <div className="overflow-hidden rounded-lg shadow-md mb-4 sm:mb-6">
-        <img
-          src={event.mainimageUrl || event.eventimageurl}
-          alt={event.eventtitle}
-          className="w-full max-h-72 sm:max-h-96 object-cover"
-        />
+        {/* Image */}
+        <div className="overflow-hidden rounded-lg shadow-md mb-4 sm:mb-6">
+          <img
+            src={event.mainimageUrl || event.eventimageurl}
+            alt={event.eventtitle}
+            className="w-full max-h-72 sm:max-h-96 object-cover"
+          />
+        </div>
+
+        {/* Inside Title */}
+        <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
+          {event.insidetitle}
+        </h3>
+
+        {/* Description */}
+        <p className="text-gray-700 leading-relaxed whitespace-pre-line text-sm sm:text-base">
+          {event.description}
+        </p>
       </div>
-
-      {/* Inside Title */}
-      <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">{event.insidetitle}</h3>
-
-      {/* Description */}
-      <p className="text-gray-700 leading-relaxed whitespace-pre-line text-sm sm:text-base">
-        {event.description}
-      </p>
     </div>
   );
 }

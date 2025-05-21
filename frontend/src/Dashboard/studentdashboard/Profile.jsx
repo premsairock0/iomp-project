@@ -46,7 +46,7 @@ function Profile() {
   }
 
   return (
-    <div className="ml-[250px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div className="ml-[0px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Student Profile</h2>
       <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-300 p-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-800 text-base">

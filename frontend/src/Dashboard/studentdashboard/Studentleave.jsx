@@ -62,7 +62,7 @@ const Studentleave = () => {
   };
 
   return (
-    <div className="ml-[250px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div className="ml-[0px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Submit Leave Letter</h2>
 
       <div

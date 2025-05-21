@@ -32,7 +32,7 @@ function StudentHolidays() {
   );
 
   return (
-    <div className="ml-[250px] mt-[56px] p-8 min-h-screen bg-gradient-to-tr from-blue-50 to-purple-100">
+    <div className="ml-[0px] mt-[56px] p-8 min-h-screen bg-gradient-to-tr from-blue-50 to-purple-100">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">General Holidays</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-xl overflow-hidden">

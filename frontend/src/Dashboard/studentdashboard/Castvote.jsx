@@ -27,7 +27,7 @@ const Castvote = () => {
   return (
     <div
       style={{
-        marginLeft: '250px',
+        marginLeft: '50px',
         marginTop: '56px',
         padding: '2rem',
         minHeight: 'calc(100vh - 56px)',

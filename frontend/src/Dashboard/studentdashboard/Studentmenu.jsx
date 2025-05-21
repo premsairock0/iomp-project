@@ -45,7 +45,7 @@ function Studentmenu() {
   if (loading) return <p className="text-center mt-10 text-gray-600">Loading menu...</p>;
 
   return (
-    <div className="ml-[250px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div className="ml-[0px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Mess Menu</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {menu.length > 0 ? (

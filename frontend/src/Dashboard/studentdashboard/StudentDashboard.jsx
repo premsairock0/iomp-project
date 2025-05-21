@@ -13,6 +13,7 @@ function StudentDashboard() {
 
         <main
           style={{
+            marginLeft: "250px",
             flex: 1,
             padding: "20px",
             backgroundColor: "#f8f9fa",

@@ -43,7 +43,7 @@ function Studentmembers() {
   }, []);
 
   return (
-    <div className="p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen ml-[250px] mt-16">
+    <div className="p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen ml-[0px] mt-16">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Hostel Committee Members</h1>
 
       {loading ? (
