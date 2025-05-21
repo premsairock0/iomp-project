@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../wardendashboard/Navbar";
 import Sidebar from "./Sidebar";
+import WelcomeStudent from "./WelcomeStudent"; // <-- Import your component
 import { Outlet } from "react-router-dom";
 
 function StudentDashboard() {
@@ -19,6 +20,12 @@ function StudentDashboard() {
             overflowY: "auto",
           }}
         >
+          {/* <h1 style={{ marginBottom: "10px", color: "#212529" }}>
+            Student Dashboard
+          </h1> */}
+
+          {/* <WelcomeStudent /> Renders below the h1 */}
+
           <Outlet />
         </main>
       </div>

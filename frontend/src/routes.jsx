@@ -34,7 +34,7 @@ import AdminHolidays from './Dashboard/admindashboard/Adminholidays';
 import Changepassword from './Dashboard/admindashboard/Changepassword';
 import Events from './Dashboard/admindashboard/Events';
 import VotingResults from './Dashboard/wardendashboard/VotingResults'
-
+import LatestUpdate from './Dashboard/studentdashboard/LatestUpdate'
 function AppRoutes() {
   return (
     <Routes>
@@ -57,6 +57,7 @@ function AppRoutes() {
 
 
       <Route path="/student/dashboard" element={<StudentDashboard />} >
+      <Route path="latest-update" element={<LatestUpdate/>} />
        <Route path="profile" element={<Profile/>} />
          <Route path="members" element={<Studentmembers/>} /> 
           <Route path="menu" element={<Studentmenu/>} />

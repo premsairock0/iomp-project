@@ -28,6 +28,7 @@ function Sidebar() {
         }}
       >
         {[
+          { label: "Latest update", path: "/student/dashboard/latest-update" },
           { label: "Profile", path: "/student/dashboard/profile" },
           { label: "Members", path: "/student/dashboard/members" },
           { label: "Notifications", path: "/student/dashboard/notifications" },
