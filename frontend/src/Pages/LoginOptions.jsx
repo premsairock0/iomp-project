@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
 
-const roles = [
-   { name: 'Student', icon: '🎓', description: 'Login as student' },
+const roles = [{ name: 'Student', icon: '🎓', description: 'Login as student' },
   { name: 'Warden', icon: '🧑‍✈️', description: 'Login as warden' },
   { name: 'Admin', icon: '👤', description: 'Login as administrator' },
+  
   { name: 'Chef', icon: '🍔', description: 'Login as chef' },
 ];
 
