@@ -1,177 +1,76 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function Events() {
-  const [showForm, setShowForm] = useState(false);
   const [events, setEvents] = useState([]);
-  const [formData, setFormData] = useState({
-    eventtitle: "",
-    eventimageurl: "",
-    insidetitle: "",
-    description: "",
-    mainimageUrl: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const fetchEvents = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/event/getevent");
-      if (Array.isArray(res.data)) {
-        setEvents(res.data);
-      } else {
-        setEvents([]);
-        console.error("Expected array, got:", res.data);
-      }
-    } catch (err) {
-      setError("Failed to fetch events.");
-      console.error(err);
-    }
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    fetchEvents();
+    axios.get("http://localhost:3000/api/event/getevent")
+      .then(res => setEvents(res.data))
+      .catch(err => console.error(err));
   }, []);
 
-  const handleInputChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    try {
-      const res = await axios.post("http://localhost:3000/api/event/addevent", formData);
-      console.log("Submitted:", res.data);
-      setFormData({
-        eventtitle: "",
-        eventimageurl: "",
-        insidetitle: "",
-        description: "",
-        mainimageUrl: "",
-      });
-      setShowForm(false);
-      fetchEvents();
-    } catch (err) {
-      setError("Failed to add event.");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const isDetailPage = location.pathname !== "/admin/dashboard/events";
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      {/* Add Event Button */}
-      <div className="flex justify-center mb-6">
-        <button
-          onClick={() => setShowForm((prev) => !prev)}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition font-semibold"
-        >
-          {showForm ? "Cancel" : "Add an Event"}
-        </button>
-      </div>
-
-      {/* Event Form */}
-      {showForm && (
-        <form
-          onSubmit={handleSubmit}
-          className="mb-8 bg-white p-6 rounded shadow space-y-4"
-        >
-          {error && (
-            <div className="text-red-600 font-semibold">{error}</div>
-          )}
-          <input
-            name="eventtitle"
-            value={formData.eventtitle}
-            onChange={handleInputChange}
-            placeholder="Event Title"
-            required
-            className="w-full border rounded px-3 py-2"
-          />
-          <input
-            name="eventimageurl"
-            value={formData.eventimageurl}
-            onChange={handleInputChange}
-            placeholder="Event Image URL"
-            required
-            className="w-full border rounded px-3 py-2"
-          />
-          <input
-            name="insidetitle"
-            value={formData.insidetitle}
-            onChange={handleInputChange}
-            placeholder="Inside Title"
-            required
-            className="w-full border rounded px-3 py-2"
-          />
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            placeholder="Description"
-            required
-            rows={4}
-            className="w-full border rounded px-3 py-2"
-          />
-          <input
-            name="mainimageUrl"
-            value={formData.mainimageUrl}
-            onChange={handleInputChange}
-            placeholder="Main Image URL"
-            required
-            className="w-full border rounded px-3 py-2"
-          />
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-          >
-            {loading ? "Submitting..." : "Submit Event"}
-          </button>
-        </form>
-      )}
-
-      {/* Events Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {events.length === 0 ? (
-          <p className="text-center col-span-full text-gray-600">
-            No events to show.
-          </p>
-        ) : (
-          events.map((ev) => (
-            <div
-              key={ev._id}
-              className="bg-white rounded shadow overflow-hidden"
-            >
-              <img
-                src={ev.eventimageurl}
-                alt={ev.eventtitle}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold">{ev.eventtitle}</h3>
-                <h4 className="text-md text-gray-600">{ev.insidetitle}</h4>
-                <p className="mt-2 text-gray-700">{ev.description}</p>
-                {ev.mainimageUrl && (
+    <div className="p-6">
+      {!isDetailPage && (
+        <>
+          <h2 className="text-2xl font-bold mb-6">Events</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {events.map(event => (
+              <div
+                key={event._id}
+                className="flex flex-col justify-between bg-white rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out border border-gray-200 group"
+                onClick={() => navigate(`${event._id}`)}
+              >
+                <div>
                   <img
-                    src={ev.mainimageUrl}
-                    alt="Main visual"
-                    className="mt-4 w-full h-40 object-cover rounded"
+                    src={event.eventimageurl}
+                    alt={event.eventtitle}
+                    className="w-full h-48 object-cover rounded-t-lg"
                   />
-                )}
+                  <div className="p-5">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{event.eventtitle}</h3>
+                    <p className="text-gray-600 text-sm line-clamp-3">{event.insidetitle}</p>
+                  </div>
+                </div>
+
+                {/* Arrow icon container below content */}
+                <div className="p-4 flex justify-end">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 text-gray-400 group-hover:text-gray-700 transition-colors duration-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
-            </div>
-          ))
-        )}
-      </div>
+            ))}
+          </div>
+        </>
+      )}
+      <Outlet />
     </div>
   );
 }
 
 export default Events;
+
+/* 
+Add this CSS somewhere in your global stylesheet if you don’t have Tailwind’s line-clamp plugin:
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+*/

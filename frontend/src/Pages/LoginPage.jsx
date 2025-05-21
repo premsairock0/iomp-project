@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function LoginPage() {
@@ -41,7 +41,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-400 to-pink-500">
       <div className="bg-white p-8 rounded-xl shadow-2xl w-[90%] max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">Login as {role}</h2>
+        <h2 className="text-2xl font-bold text-center mb-6 text-indigo-700">
+          Login as {role}
+        </h2>
         <form onSubmit={handleLogin}>
           <input
             type="text"
@@ -66,6 +68,15 @@ export default function LoginPage() {
             Login
           </button>
         </form>
+
+        {role === 'student' && (
+          <p className="text-center mt-4 text-sm text-gray-600">
+            Don’t have an account?{' '}
+            <Link to="/register" className="text-indigo-600 hover:underline font-medium">
+              Sign up
+            </Link>
+          </p>
+        )}
       </div>
     </div>
   );

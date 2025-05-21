@@ -33,6 +33,7 @@ import MessBill from "./Dashboard/studentdashboard/MessBill";
 import AdminHolidays from './Dashboard/admindashboard/Adminholidays';
 import Changepassword from './Dashboard/admindashboard/Changepassword';
 import Events from './Dashboard/admindashboard/Events';
+import EventDetail from './Dashboard/admindashboard/Eventdetails';
 
 function AppRoutes() {
   return (
@@ -51,7 +52,9 @@ function AppRoutes() {
          <Route path="uploadPhoto" element={<UploadPhoto/>} />
           <Route path="calender" element={<AdminHolidays/>}/>
       <Route path="password" element={<Changepassword/>}/>
-       <Route path="events" element={<Events/>} />
+       <Route path="events" element={<Events/>} >
+        <Route path=":id" element={<EventDetail/>} />
+       </Route>
       </Route>
 
 
