@@ -37,6 +37,7 @@ function Sidebar() {
           { label: "Services", path: "/student/dashboard/services" },
           { label: "Student Holidays", path: "/student/dashboard/holidays" },
           {label: "Mess Bill", path: "/student/dashboard/mess-bill"}, 
+             { label: "Change password", path: "/student/dashboard/password" },
         ].map((item, index) => (
           <button
             key={index}

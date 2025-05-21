@@ -31,6 +31,7 @@ function Sidebar() {
           { label: "Menu", path: "/chef/dashboard/menu" },
           { label: "Members", path: "/chef/dashboard/members" },
            { label: "Calender", path: "/chef/dashboard/calender" },
+          { label: "Change password", path: "/chef/dashboard/password" },
         ].map((item, index) => (
           <button
             key={index}

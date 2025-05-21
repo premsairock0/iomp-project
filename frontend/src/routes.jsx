@@ -35,6 +35,9 @@ import Changepassword from './Dashboard/admindashboard/Changepassword';
 import Events from './Dashboard/admindashboard/Events';
 import EventDetail from './Dashboard/admindashboard/Eventdetails';
 import VotingResults from './Dashboard/wardendashboard/VotingResults';
+import Studentpassword from './Dashboard/studentdashboard/Studentpassword';
+import Chefpassword from './Dashboard/chefdashboard/Chefpassword';
+import Wardenpassword from './Dashboard/wardendashboard/Wardenpassword'
 
 function AppRoutes() {
   return (
@@ -49,10 +52,11 @@ function AppRoutes() {
       <Route path="studentlist" element={<Adminstudent/>} />
        <Route path="wardenlist" element={<Wardenslist/>} />
         <Route path="cheflist" element={<Cheflist/>} />
-         <Route path="members" element={<Studentmembers/>} />
+         <Route path="members" element={<Memberslist/>} />
          <Route path="uploadPhoto" element={<UploadPhoto/>} />
           <Route path="calender" element={<AdminHolidays/>}/>
       <Route path="password" element={<Changepassword/>}/>
+
        <Route path="events" element={<Events/>} >
         <Route path=":id" element={<EventDetail/>} />
        </Route>
@@ -69,6 +73,8 @@ function AppRoutes() {
                   <Route path="services" element={<Services/>} />
                   <Route path='holidays' element={<StudentHolidays />} />
                   <Route path="/student/dashboard/mess-bill" element={<MessBill />} />
+                   <Route path="password" element={<Studentpassword/>}/>
+
       </Route>
 
 
@@ -76,6 +82,8 @@ function AppRoutes() {
          <Route path="menu" element={<Menu/>} />
          <Route path="members" element={<Studentmembers/>} />
          <Route path="calender" element={<StudentHolidays/>}/>
+                    <Route path="password" element={<Chefpassword/>}/>
+
       </Route>
 
       <Route path="/warden/dashboard" element={<WardenDashboard />}>
@@ -83,6 +91,8 @@ function AppRoutes() {
           <Route path="letters" element={<StudentLetters />} />
           <Route path="voting" element={<Voting />} />
            <Route path="voting-results" element={<VotingResults />} />
+           <Route path="password" element={<Wardenpassword/>}/>
+
         </Route>
 
       <Route path="*" element={<h1 className="text-center mt-10 text-red-500 text-xl">404 - Page Not Found</h1>} />

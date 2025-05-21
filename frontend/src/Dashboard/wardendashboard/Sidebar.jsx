@@ -44,6 +44,8 @@ function Sidebar() {
           { label: "Voting", path: "/warden/dashboard/voting" },
           { label: "Student Letters", path: "/warden/dashboard/letters" },
           { label: "Voting Results ", path: "/warden/dashboard/voting-results" },
+          { label: "Change password", path: "/warden/dashboard/password" },
+
         ].map((item, index) => (
           <button
             key={index}

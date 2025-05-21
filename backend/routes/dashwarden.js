@@ -5,6 +5,9 @@ const wardenAuth = require('../middlewares/warden');
 const Student = require('../models/student');
 const LeaveLetter = require('../models/LeaveLetter');  
 const Voting = require('../models/voting'); 
+const Warden = require('../models/warden');
+const bcrypt = require("bcrypt");
+
 
 // Get all students info (protected)
 router.get('/students', async (req, res) => {
@@ -93,6 +96,36 @@ router.delete('/voting/:id', wardenAuth, async (req, res) => {
   } catch (error) {
     console.error('Error deleting voting entry:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.put("/change-password", wardenAuth, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).json({ message: "Both old and new passwords are required" });
+  }
+
+  try {
+    const warden= await Warden.findById(req.warden.id);
+
+    if (!warden) {
+      return res.status(404).json({ message: "Warden not found" });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, warden.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Old password is incorrect" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    warden.password = hashedNewPassword;
+    await warden.save();
+
+    return res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Change password error:", error);
+    return res.status(500).json({ message: "Server error" });
   }
 });
 
