@@ -18,7 +18,7 @@ const photos = require("./routes/photo");
 const event = require("./routes/event");
 const holiday_router = require("./routes/holidayRoute");
 const messBill_router = require("./routes/messBill");
-
+const selectedStudents = require('./routes/selectedStudents');
 
 
 // ✅ Enable CORS for frontend (localhost:5173)
@@ -46,6 +46,7 @@ app.use("/api/holidays", holiday_router);
 app.use("/api/photos",photos)
 app.use("/api/mess", messBill_router);
 app.use("/api/event",event);
+app.use("/api/selectedstudents",selectedStudents);
 // Test route
 app.get("/", (req, res) => {
   res.send("I am working");
