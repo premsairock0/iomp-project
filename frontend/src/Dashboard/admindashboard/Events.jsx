@@ -16,7 +16,7 @@ function Events() {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("/api/event/getevent");
+      const res = await axios.get("http://localhost:3000/api/event/getevent");
       if (Array.isArray(res.data)) {
         setEvents(res.data);
       } else {
@@ -45,7 +45,7 @@ function Events() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post("/api/event/addevent", formData);
+      const res = await axios.post("http://localhost:3000/api/event/addevent", formData);
       console.log("Submitted:", res.data);
       setFormData({
         eventtitle: "",

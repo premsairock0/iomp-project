@@ -4,7 +4,7 @@ const Event = require('../models/event');
 const adminAuth = require("../middlewares/admin");
 
 // POST /api/event/addevent
-router.post('/addevent',adminAuth, async (req, res) => {
+router.post('/addevent', async (req, res) => {
   const { eventtitle, eventimageurl, insidetitle, description, mainimageUrl } = req.body;
 
   try {
@@ -25,7 +25,7 @@ router.post('/addevent',adminAuth, async (req, res) => {
 });
 
 // GET /api/event/getevent
-router.get('/getevent',adminAuth, async (req, res) => {
+router.get('/getevent', async (req, res) => {
   try {
     const events = await Event.find().sort({ createdAt: -1 });
 
@@ -38,7 +38,7 @@ router.get('/getevent',adminAuth, async (req, res) => {
 });
 
 // GET /api/event/getevent/:id
-router.get('/getevent/:id',adminAuth, async (req, res) => {
+router.get('/getevent/:id', async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
@@ -50,7 +50,7 @@ router.get('/getevent/:id',adminAuth, async (req, res) => {
 });
 
 // PUT /api/event/getevent/:id
-router.put('/getevent/:id', adminAuth, async (req, res) => {
+router.put('/getevent/:id',  async (req, res) => {
   const { eventtitle, eventimageurl, insidetitle, description, mainimageUrl } = req.body;
 
   try {
