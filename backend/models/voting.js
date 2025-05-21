@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
-const student=require("./student")
-const votingSchema = new mongoose.Schema({
-  studentIds: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'student',
+const SelectedStudent=require('./selectedVoters');
+const voteSchema = new mongoose.Schema({
+  voterId: {
+    type: String, // or mongoose.Schema.Types.ObjectId if linked to a User collection
     required: true,
-  }],
-  postedAt: {
-    type: Date,
-    default: Date.now,
+    unique: true,  // ensures a voter can vote only once
+  },
+  candidateId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'SelectedStudent',
+    required: true,
   }
-});
+}, { timestamps: true });
 
-module.exports = mongoose.model('Voting', votingSchema);
+module.exports = mongoose.model('Vote', voteSchema);
