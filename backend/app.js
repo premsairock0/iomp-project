@@ -15,6 +15,7 @@ const dashadmin_router = require("./routes/dashadmin");
 const dashstudent_router = require("./routes/dashstudent");
 const student_letter = require("./routes/studentsLetters");
 const photos = require("./routes/photo");
+const event = require("./routes/event");
 const holiday_router = require("./routes/holidayRoute");
 const messBill_router = require("./routes/messBill");
 
@@ -44,6 +45,7 @@ app.use("/api/dashstudent",dashstudent_router);
 app.use("/api/holidays", holiday_router);
 app.use("/api/photos",photos)
 app.use("/api/mess", messBill_router);
+app.use("/api/event",event);
 // Test route
 app.get("/", (req, res) => {
   res.send("I am working");
