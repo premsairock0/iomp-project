@@ -42,13 +42,13 @@ router.get('/services', studentAuth, async (req, res) => {
   }
 });
 
-// POST /service-requests - Create a new service request
-router.post('/service-requests/:id', studentAuth, async (req, res) => {
+// POST /service-requests - Create a new service request   
+router.post('/service-requests/', studentAuth, async (req, res) => {
   try {
     console.log('req.student:', req.student);  // Debug
 
     const { servicetitle, description, roomNo } = req.body;
-    const studentId = req.student?._id;
+    const studentId = req.student.id;
 
     if (!studentId) {
       return res.status(400).json({ message: "Student ID missing in token" });
@@ -66,9 +66,9 @@ router.post('/service-requests/:id', studentAuth, async (req, res) => {
 
 
 // GET /service-requests - Get all own service requests
-router.get('/service-requests', studentAuth, async (req, res) => {
+router.get('/service-requests/', studentAuth, async (req, res) => {
   try {
-    const studentId = req.student._id;
+    const studentId = req.student.id;
     const requests = await ServiceRequest.find({ studentId }).sort({ createdAt: -1 });
     res.status(200).json({ requests });
   } catch (error) {

@@ -103,20 +103,25 @@ router.delete('/voting/:id', wardenAuth, async (req, res) => {
   }
 });
 
-router.get('/service-requests', wardenAuth, async (req, res) => {
+router.get('/service-requests', async (req, res) => {
   try {
     const requests = await ServiceRequest.find({})
-      .populate('studentId', 'name email')
-      .populate('serviceId', 'servicetitle description');
+      .populate('studentId', 'name email'); // only populate studentId, servicetitle is a string
+
     res.status(200).json({ requests });
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching service requests', error: err.message });
+    res.status(500).json({
+      message: 'Error fetching service requests',
+      error: err.message
+    });
   }
 });
 
-// 🧑‍✈️ Warden: Update service request status
-router.patch('service-requests/:id/status', wardenAuth, async (req, res) => {
+// 🧑‍✈️ Warden: Update service request status wardenAuth,
+router.put('/service-requests/:id',  async (req, res) => {
   const { status } = req.body;
+
+  // Validate status
   if (!['Pending', 'Approved', 'Not Available'].includes(status)) {
     return res.status(400).json({ message: 'Invalid status value' });
   }
@@ -135,6 +140,7 @@ router.patch('service-requests/:id/status', wardenAuth, async (req, res) => {
     res.status(500).json({ message: 'Error updating status', error: err.message });
   }
 });
+
 
 
 router.put("/change-password", wardenAuth, async (req, res) => {
