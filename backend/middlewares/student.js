@@ -11,7 +11,7 @@ function verifyStudentToken(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.student = decoded;  // Attach decoded info to req
+    req.student = decoded;  // Attach decoded info to req.student
     next();
   } catch (err) {
     return res.status(401).json({ message: "Invalid or expired token" });

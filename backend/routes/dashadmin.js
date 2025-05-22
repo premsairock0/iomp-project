@@ -5,6 +5,9 @@ const Student = require('../models/student');
 const Member = require('../models/member');
 const Chef = require('../models/chef');
 const Warden = require('../models/warden');
+const Service = require('../models/service');
+const adminAuth = require("../middlewares/admin");
+
 
 router.get('/students', async (req, res) => {
   try {
@@ -63,6 +66,29 @@ router.post('/members', async (req, res) => {
     }
     console.error('Error creating member:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.get('/services', async (req, res) => {
+  try {
+    const services = await Service.find({});
+    res.status(200).json({ services });
+  } catch (error) {
+    console.error('Error fetching services:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Admin: Add new service type
+router.post('/services', async (req, res) => {
+  try {
+    const { imgtitle, serviceimageurl, servicetitle, description } = req.body;
+    const newService = new Service({ imgtitle, serviceimageurl, servicetitle, description });
+    await newService.save();
+    res.status(201).json({ message: 'Service added successfully', service: newService });
+  } catch (error) {
+    console.error('Error adding service type:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 

@@ -7,6 +7,10 @@ const LeaveLetter = require('../models/LeaveLetter');
 const Voting = require('../models/voting'); 
 const Warden = require('../models/warden');
 const bcrypt = require("bcrypt");
+// const Service = require('../models/service');
+const ServiceRequest = require("../models/request");
+
+
 
 
 // Get all students info (protected)
@@ -98,6 +102,40 @@ router.delete('/voting/:id', wardenAuth, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+router.get('/service-requests', wardenAuth, async (req, res) => {
+  try {
+    const requests = await ServiceRequest.find({})
+      .populate('studentId', 'name email')
+      .populate('serviceId', 'servicetitle description');
+    res.status(200).json({ requests });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching service requests', error: err.message });
+  }
+});
+
+// 🧑‍✈️ Warden: Update service request status
+router.patch('service-requests/:id/status', wardenAuth, async (req, res) => {
+  const { status } = req.body;
+  if (!['Pending', 'Approved', 'Not Available'].includes(status)) {
+    return res.status(400).json({ message: 'Invalid status value' });
+  }
+
+  try {
+    const request = await ServiceRequest.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({ message: 'Service request not found' });
+    }
+
+    request.status = status;
+    await request.save();
+
+    res.status(200).json({ message: 'Service request status updated', request });
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating status', error: err.message });
+  }
+});
+
 
 router.put("/change-password", wardenAuth, async (req, res) => {
   const { oldPassword, newPassword } = req.body;

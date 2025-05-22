@@ -32,6 +32,7 @@ function Sidebar() {
           { label: "Profile", path: "/student/dashboard/profile" },
           { label: "Members", path: "/student/dashboard/members" },
           { label: "Notifications", path: "/student/dashboard/notifications" },
+         { label: "Events", path: "/student/dashboard/events" } ,
           { label: "Menu", path: "/student/dashboard/menu" },
           { label: "Cast Vote", path: "/student/dashboard/vote" },
           { label: "Leave Letter", path: "/student/dashboard/leave" },

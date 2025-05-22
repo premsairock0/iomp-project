@@ -2,16 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
-
 const Student = require('../models/student');
 const Member = require('../models/member');
 const Chef = require('../models/chef');
 const Warden = require('../models/warden');
 const Menu= require("../models/menu");
 const studentAuth = require("../middlewares/student");
+const Service = require('../models/service');
+const ServiceRequest = require("../models/request");
 
-
-
+// GET all menus
 router.get("/menu", async (req, res) => {
   try {
     const menus = await Menu.find({});
@@ -21,6 +21,7 @@ router.get("/menu", async (req, res) => {
   }
 });
 
+// GET all members
 router.get('/members', async (req, res) => {
   try {
     const members = await Member.find({});
@@ -31,6 +32,52 @@ router.get('/members', async (req, res) => {
   }
 });
 
+// GET all services (studentAuth protected)
+router.get('/services', studentAuth, async (req, res) => {
+  try {
+    const services = await Service.find({});
+    res.status(200).json({ services });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching services', error: err.message });
+  }
+});
+
+// POST /service-requests - Create a new service request
+router.post('/service-requests/:id', studentAuth, async (req, res) => {
+  try {
+    console.log('req.student:', req.student);  // Debug
+
+    const { servicetitle, description, roomNo } = req.body;
+    const studentId = req.student?._id;
+
+    if (!studentId) {
+      return res.status(400).json({ message: "Student ID missing in token" });
+    }
+
+    const request = new ServiceRequest({ servicetitle, description, roomNo, studentId });
+    await request.save();
+
+    res.status(201).json({ message: 'Service request submitted', request });
+  } catch (error) {
+    console.error('Error creating service request:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+
+// GET /service-requests - Get all own service requests
+router.get('/service-requests', studentAuth, async (req, res) => {
+  try {
+    const studentId = req.student._id;
+    const requests = await ServiceRequest.find({ studentId }).sort({ createdAt: -1 });
+    res.status(200).json({ requests });
+  } catch (error) {
+    console.error('Error fetching student requests:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// PUT /change-password - Change student password
 router.put("/change-password", studentAuth, async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 
@@ -39,7 +86,8 @@ router.put("/change-password", studentAuth, async (req, res) => {
   }
 
   try {
-    const student = await Student.findById(req.student.id);
+    // Use req.student._id to find student
+    const student = await Student.findById(req.student._id);
 
     if (!student) {
       return res.status(404).json({ message: "Student not found" });
@@ -62,4 +110,3 @@ router.put("/change-password", studentAuth, async (req, res) => {
 });
 
 module.exports = router;
-

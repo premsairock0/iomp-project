@@ -25,7 +25,7 @@ import Profile from './Dashboard/studentdashboard/Profile';
 import Studentleave from './Dashboard/studentdashboard/Studentleave';
 import Studentmembers from './Dashboard/studentdashboard/Studentmembers';
 import Studentmenu from './Dashboard/studentdashboard/Studentmenu';
-import Services from './Dashboard/studentdashboard/Services';
+// import Services from './Dashboard/studentdashboard/Services';
 import Notifications from './Dashboard/studentdashboard/Notifications';
 import Castvote from './Dashboard/studentdashboard/Castvote';
 import StudentHolidays from './Dashboard/studentdashboard/StudentHolidays';
@@ -39,6 +39,8 @@ import Studentpassword from './Dashboard/studentdashboard/Studentpassword';
 import Chefpassword from './Dashboard/chefdashboard/Chefpassword';
 import Wardenpassword from './Dashboard/wardendashboard/Wardenpassword'
 import LatestUpdate from './Dashboard/studentdashboard/LatestUpdate'
+import Studentevents from './Dashboard/studentdashboard/Studentevents';
+import Studenteventdetails from './Dashboard/studentdashboard/Studenteventdetails';
 
 
 function AppRoutes() {
@@ -73,11 +75,13 @@ function AppRoutes() {
             <Route path="notifications" element={<Notifications/>} />
               <Route path="vote" element={<Castvote/>} />
                 <Route path="leave" element={<Studentleave/>} />
-                  <Route path="services" element={<Services/>} />
+                  {/* <Route path="services" element={<Services/>} /> */}
                   <Route path='holidays' element={<StudentHolidays />} />
                   <Route path="/student/dashboard/mess-bill" element={<MessBill />} />
                    <Route path="password" element={<Studentpassword/>}/>
-
+                    <Route path="events" element={<Studentevents/>} >
+        <Route path=":id" element={<Studenteventdetails/>} />
+        </Route>
       </Route>
 
 
