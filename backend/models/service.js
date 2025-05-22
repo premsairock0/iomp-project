@@ -25,7 +25,10 @@ const serviceSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true
-  }
+  },
+   mainimageUrl: {
+     type: String, required: true
+     },
 });
 
 module.exports = mongoose.model("Service", serviceSchema);

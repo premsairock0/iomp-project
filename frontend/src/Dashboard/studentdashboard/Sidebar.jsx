@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function Sidebar() {
   const navigate = useNavigate();
 
@@ -8,8 +9,8 @@ function Sidebar() {
     <div
       style={{
         width: "250px",
-        minHeight: "100vh",
-        backgroundColor: "#000", // Black background
+        height: "100vh",              // Full viewport height
+        backgroundColor: "#000",      // Black background
         paddingTop: "56px",
         position: "fixed",
         top: 0,
@@ -17,6 +18,7 @@ function Sidebar() {
         borderRight: "1px solid #333",
         display: "flex",
         flexDirection: "column",
+        overflowY: "auto",            // Make it scrollable vertically
       }}
     >
       <div
@@ -32,16 +34,17 @@ function Sidebar() {
           { label: "Profile", path: "/student/dashboard/profile" },
           { label: "Members", path: "/student/dashboard/members" },
           { label: "Notifications", path: "/student/dashboard/notifications" },
-         { label: "Events", path: "/student/dashboard/events" } ,
+          { label: "Events", path: "/student/dashboard/events" },
           { label: "Menu", path: "/student/dashboard/menu" },
           { label: "Cast Vote", path: "/student/dashboard/vote" },
           { label: "Leave Letter", path: "/student/dashboard/leave" },
           { label: "Services", path: "/student/dashboard/services" },
+            { label: "Service Requests", path: "/student/dashboard/services/requests" },
           { label: "Student Holidays", path: "/student/dashboard/holidays" },
-          {label: "Mess Bill", path: "/student/dashboard/mess-bill"}, 
+          { label: "Mess Bill", path: "/student/dashboard/mess-bill" },
           { label: "Change password", path: "/student/dashboard/password" },
-
-      
+          
+          
         ].map((item, index) => (
           <button
             key={index}

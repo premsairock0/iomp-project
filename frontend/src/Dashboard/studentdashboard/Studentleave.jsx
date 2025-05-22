@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Studentleave = () => {
@@ -7,7 +7,37 @@ const Studentleave = () => {
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [letters, setLetters] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchLetters();
+  }, []);
+
+  const fetchLetters = async () => {
+    const token = localStorage.getItem("Authorization");
+    if (!token) return;
+
+    try {
+      const res = await fetch("http://localhost:3000/api/studentletters/myletters", {
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.ok) {
+        setError(data.message || "Failed to fetch letters");
+      } else {
+        setLetters(data);
+      }
+    } catch (err) {
+      setError("Error fetching previous letters");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,12 +69,6 @@ const Studentleave = () => {
 
       const data = await response.json();
 
-      if (response.status === 401 || response.status === 403) {
-        localStorage.removeItem("Authorization");
-        navigate("/login/student");
-        return;
-      }
-
       if (!response.ok) {
         setError(data.message || "Failed to submit leave letter");
         setLoading(false);
@@ -54,15 +78,16 @@ const Studentleave = () => {
       setStatus(data.letter);
       setRollno("");
       setDescription("");
-      setLoading(false);
+      fetchLetters(); // refresh letters
     } catch (err) {
       setError("Server error, try again later");
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="ml-[0px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div className="ml-[250px] mt-[56px] p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Submit Leave Letter</h2>
 
       <div
@@ -112,22 +137,31 @@ const Studentleave = () => {
 
         {status && (
           <div className="mt-6 p-4 border rounded bg-gray-50">
-            <h3 className="font-semibold text-lg text-gray-700">Leave Letter Status</h3>
-            <p>
-              <strong>Roll Number:</strong> {status.rollno}
-            </p>
-            <p>
-              <strong>Description:</strong> {status.description}
-            </p>
-            <p>
-              <strong>Approved:</strong>{" "}
-              {status.approved ? (
-                <span className="text-green-600 font-semibold">Yes ✅</span>
-              ) : (
-                <span className="text-red-600 font-semibold">No ❌</span>
-              )}
-            </p>
+            <h3 className="font-semibold text-lg text-gray-700">Leave Letter Submitted</h3>
+            <p><strong>Roll Number:</strong> {status.rollno}</p>
+            <p><strong>Description:</strong> {status.description}</p>
+            <p><strong>Status:</strong> {status.status}</p>
           </div>
+        )}
+      </div>
+
+      {/* Display Previous Letters */}
+      <div className="mt-10 max-w-xl">
+        <h3 className="text-xl font-semibold mb-4 text-gray-700">Your Previous Leave Letters</h3>
+        {letters.length === 0 ? (
+          <p className="text-gray-600">No letters submitted yet.</p>
+        ) : (
+          letters.map((letter) => (
+            <div
+              key={letter._id}
+              className="bg-white border rounded p-4 mb-4 shadow-sm hover:shadow-md transition"
+            >
+              <p><strong>Roll No:</strong> {letter.rollno}</p>
+              <p><strong>Description:</strong> {letter.description}</p>
+              <p><strong>Submitted:</strong> {new Date(letter.createdAt).toLocaleString()}</p>
+              <p><strong>Status:</strong> {letter.status}</p>
+            </div>
+          ))
         )}
       </div>
     </div>

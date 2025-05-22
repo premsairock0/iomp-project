@@ -47,7 +47,9 @@ function Sidebar() {
           { label: "Upload Photo", path: "/admin/dashboard/uploadPhoto" },
              { label: "Calender", path: "/admin/dashboard/calender" },
                 { label: "Change password", path: "/admin/dashboard/password" },
-                  { label: "Events", path: "/admin/dashboard/events" }
+                  { label: "Events", path: "/admin/dashboard/events" },
+                     { label: "Services", path: "/admin/dashboard/services" }
+
         ].map((item, index) => (
           <button
             key={index}

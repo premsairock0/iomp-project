@@ -33,7 +33,8 @@ router.get('/members', async (req, res) => {
 });
 
 // GET all services (studentAuth protected)
-router.get('/services', studentAuth, async (req, res) => {
+// Corrected route definition
+router.get('/services',studentAuth, async (req, res) => {
   try {
     const services = await Service.find({});
     res.status(200).json({ services });
@@ -41,6 +42,19 @@ router.get('/services', studentAuth, async (req, res) => {
     res.status(500).json({ message: 'Error fetching services', error: err.message });
   }
 });
+
+router.get('/services/:id', studentAuth, async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id);
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    res.status(200).json({ service });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching service', error: err.message });
+  }
+});
+
 
 // POST /service-requests - Create a new service request   
 router.post('/service-requests/', studentAuth, async (req, res) => {

@@ -79,17 +79,40 @@ router.get('/services', async (req, res) => {
   }
 });
 
+router.get('/services/:id', async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id);
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    res.status(200).json({ service });
+  } catch (error) {
+    console.error('Error fetching service by ID:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Admin: Add new service type
 router.post('/services', async (req, res) => {
   try {
-    const { imgtitle, serviceimageurl, servicetitle, description } = req.body;
-    const newService = new Service({ imgtitle, serviceimageurl, servicetitle, description });
+    const { imgtitle, serviceimageurl, mainimageUrl, servicetitle, description } = req.body;
+
+    const newService = new Service({
+      imgtitle,
+      serviceimageurl,
+      mainimageUrl,
+      servicetitle,
+      description
+    });
+
     await newService.save();
+
     res.status(201).json({ message: 'Service added successfully', service: newService });
   } catch (error) {
     console.error('Error adding service type:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
 
 module.exports = router;

@@ -41,6 +41,11 @@ import Wardenpassword from './Dashboard/wardendashboard/Wardenpassword'
 import LatestUpdate from './Dashboard/studentdashboard/LatestUpdate'
 import Studentevents from './Dashboard/studentdashboard/Studentevents';
 import Studenteventdetails from './Dashboard/studentdashboard/Studenteventdetails';
+import AdminServices from './Dashboard/admindashboard/AdminServices';
+import ServiceDetails from './Dashboard/admindashboard/ServiceDetails';
+import StudentServices from './Dashboard/studentdashboard/StudentServices';
+import StudentServiceDetails from './Dashboard/studentdashboard/StudentServiceDetails';
+import YourServiceRequests from './Dashboard/studentdashboard/YourServiceRequests';
 
 
 function AppRoutes() {
@@ -60,6 +65,10 @@ function AppRoutes() {
          <Route path="uploadPhoto" element={<UploadPhoto/>} />
           <Route path="calender" element={<AdminHolidays/>}/>
       <Route path="password" element={<Changepassword/>}/>
+            <Route path="services" element={<AdminServices/>}/>
+            <Route path="/admin/dashboard/services/:id" element={<ServiceDetails />} />
+
+
 
        <Route path="events" element={<Events/>} >
         <Route path=":id" element={<EventDetail/>} />
@@ -75,13 +84,17 @@ function AppRoutes() {
             <Route path="notifications" element={<Notifications/>} />
               <Route path="vote" element={<Castvote/>} />
                 <Route path="leave" element={<Studentleave/>} />
-                  {/* <Route path="services" element={<Services/>} /> */}
+                
                   <Route path='holidays' element={<StudentHolidays />} />
                   <Route path="/student/dashboard/mess-bill" element={<MessBill />} />
                    <Route path="password" element={<Studentpassword/>}/>
                     <Route path="events" element={<Studentevents/>} >
         <Route path=":id" element={<Studenteventdetails/>} />
         </Route>
+        <Route path="services" element={<StudentServices />} />
+<Route path="services/:id" element={<StudentServiceDetails />} />
+<Route path="services/requests" element={<YourServiceRequests />} />
+
       </Route>
 
 

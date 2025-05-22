@@ -27,22 +27,22 @@ function StudentLetters() {
       });
 
       const data = await res.json();
-      console.log("Fetched letters:", data);
 
       if (!res.ok) {
         setError(data.message || "Failed to fetch letters");
       } else {
-        setLetters(data);
+        // Only keep pending letters
+        const pendingLetters = data.filter(letter => letter.status === "pending");
+        setLetters(pendingLetters);
       }
     } catch (error) {
-      console.error("Failed to fetch letters:", error);
       setError("Something went wrong while fetching letters");
     }
 
     setLoading(false);
   };
 
-  const handleAction = async (id, approved) => {
+  const handleAction = async (id, status) => {
     const token = localStorage.getItem("Authorization");
 
     if (!token) {
@@ -57,62 +57,42 @@ function StudentLetters() {
           Authorization: token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ approved }),
+        body: JSON.stringify({ status }),
       });
 
       if (!res.ok) throw new Error("Failed to update letter");
 
       fetchLetters(); // Refresh after update
     } catch (err) {
-      console.error("Failed to update letter:", err);
       setError("Error updating letter");
     }
   };
 
   return (
-    <div style={{ marginLeft: "0px", padding: "1rem" }}>
-      <h2>Student Letters</h2>
+    <div>
+      <h2>Pending Student Letters</h2>
 
       {loading && <p>Loading...</p>}
-      {error && <p className="text-danger">{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div className="row">
-        {letters.map((letter) => (
-          <div key={letter._id} className="card col-md-5 m-2 p-7 shadow-sm">
-            <div className="card-body d-flex flex-column justify-content-between h-25">
+      <div>
+        {letters.length === 0 && !loading ? (
+          <p>No pending letters found.</p>
+        ) : (
+          letters.map((letter) => (
+            <div key={letter._id} style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
+              <p><strong>Roll No:</strong> {letter.rollno}</p>
+              <p><strong>Description:</strong> {letter.description}</p>
+              <p><strong>Submitted:</strong> {new Date(letter.createdAt).toLocaleString()}</p>
+              <p><strong>Status:</strong> Pending</p>
+
               <div>
-                <h5 className="card-title">Roll No: {letter.rollno}</h5>
-                <p className="card-text">{letter.description}</p>
-                <p className="card-text text-muted">
-                  Submitted: {new Date(letter.createdAt).toLocaleString()}
-                </p>
-                <p>
-                  Status:{" "}
-                  <strong>{letter.approved ? "Approved" : "Pending"}</strong>
-                </p>
+                <button onClick={() => handleAction(letter._id, "approved")}>Approve</button>{" "}
+                <button onClick={() => handleAction(letter._id, "rejected")}>Reject</button>
               </div>
-
-              {!letter.approved && (
-                <div className="d-flex justify-content-end mt-3">
-                  <button
-                    className="btn btn-success btn-sm me-2"
-                    style={{ backgroundColor: "#28a745", color: "white" }}
-                    onClick={() => handleAction(letter._id, true)}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    style={{ backgroundColor: "#dc3545", color: "white" }}
-                    onClick={() => handleAction(letter._id, false)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              )}
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
