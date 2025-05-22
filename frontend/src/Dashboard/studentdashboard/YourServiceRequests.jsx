@@ -3,23 +3,24 @@ import axios from 'axios';
 
 function YourServiceRequests() {
   const [requests, setRequests] = useState([]);
+  const [studentId, setStudentId] = useState('');
 
   useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const token = localStorage.getItem('studentToken');
-        const res = await axios.get('http://localhost:3000/api/dashstudent/service-requests/', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setRequests(res.data.requests);
-      } catch (err) {
-        console.error('Error fetching service requests:', err);
-      }
-    };
+    const sid = localStorage.getItem('studentId');
+    if (sid) {
+      setStudentId(sid);
 
-    fetchRequests();
+      const fetchRequests = async () => {
+        try {
+          const res = await axios.get(`http://localhost:3000/api/dashstudent/service-requests?studentId=${sid}`);
+          setRequests(res.data.requests);
+        } catch (err) {
+          console.error('Error fetching service requests:', err);
+        }
+      };
+
+      fetchRequests();
+    }
   }, []);
 
   return (
