@@ -3,8 +3,6 @@ const cors = require('cors');
 const app = express();
 require("./connect/connect");
 
-
-
 // Import routers
 const admin_router = require("./routes/admin");
 const warden_router = require("./routes/warden");
