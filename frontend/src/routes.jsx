@@ -46,6 +46,7 @@ import ServiceDetails from './Dashboard/admindashboard/ServiceDetails';
 import StudentServices from './Dashboard/studentdashboard/StudentServices';
 import StudentServiceDetails from './Dashboard/studentdashboard/StudentServiceDetails';
 import YourServiceRequests from './Dashboard/studentdashboard/YourServiceRequests';
+import StudentRequests from './Dashboard/wardendashboard/StudentRequests';
 
 
 function AppRoutes() {
@@ -112,6 +113,7 @@ function AppRoutes() {
           <Route path="voting" element={<Voting />} />
            <Route path="voting-results" element={<VotingResults />} />
            <Route path="password" element={<Wardenpassword/>}/>
+           <Route path="requests" element={<StudentRequests/>}/>
 
         </Route>
 

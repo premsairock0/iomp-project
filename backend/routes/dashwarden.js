@@ -103,22 +103,19 @@ router.delete('/voting/:id', wardenAuth, async (req, res) => {
   }
 });
 
+// GET /api/warden/service-requests
 router.get('/service-requests', async (req, res) => {
   try {
-    const requests = await ServiceRequest.find({})
-      .populate('studentId', 'name email'); // only populate studentId, servicetitle is a string
-
+    const requests = await ServiceRequest.find({}).populate('studentId', 'username email');
     res.status(200).json({ requests });
   } catch (err) {
-    res.status(500).json({
-      message: 'Error fetching service requests',
-      error: err.message
-    });
+    res.status(500).json({ message: 'Error fetching service requests', error: err.message });
   }
 });
 
+
 // 🧑‍✈️ Warden: Update service request status wardenAuth,
-router.put('/service-requests/:id',  async (req, res) => {
+router.put('/service-requests/:id', async (req, res) => {
   const { status } = req.body;
 
   // Validate status
@@ -132,6 +129,13 @@ router.put('/service-requests/:id',  async (req, res) => {
       return res.status(404).json({ message: 'Service request not found' });
     }
 
+    // Prevent status change if current status is not Pending
+    if (request.status !== 'Pending') {
+      return res.status(400).json({ 
+        message: 'Status update not allowed. Once changed from Pending, status cannot be changed again.' 
+      });
+    }
+
     request.status = status;
     await request.save();
 
@@ -140,7 +144,6 @@ router.put('/service-requests/:id',  async (req, res) => {
     res.status(500).json({ message: 'Error updating status', error: err.message });
   }
 });
-
 
 
 router.put("/change-password", wardenAuth, async (req, res) => {
