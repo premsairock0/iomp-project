@@ -57,9 +57,12 @@ router.get('/services/:id', async (req, res) => {
 router.post('/service-requests', async (req, res) => {
   try {
     const { servicetitle, description, roomNo, studentId } = req.body;
+        console.log('Received studentId:', studentId); // <-- add this
+
     if (!studentId) {
       return res.status(400).json({ message: "Student ID missing" });
     }
+  
 
     const request = new ServiceRequest({ servicetitle, description, roomNo, studentId });
     await request.save();
@@ -69,6 +72,7 @@ router.post('/service-requests', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
 
 // GET /service-requests
 router.get('/service-requests', async (req, res) => {

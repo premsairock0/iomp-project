@@ -93,7 +93,7 @@ function AppRoutes() {
         </Route>
         <Route path="services" element={<StudentServices />} />
 <Route path="services/:id" element={<StudentServiceDetails />} />
-<Route path="services/requests" element={<YourServiceRequests />} />
+<Route path="your-requests" element={<YourServiceRequests />} />
 
       </Route>
 

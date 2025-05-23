@@ -39,7 +39,7 @@ function Sidebar() {
           { label: "Cast Vote", path: "/student/dashboard/vote" },
           { label: "Leave Letter", path: "/student/dashboard/leave" },
           { label: "Services", path: "/student/dashboard/services" },
-            { label: "Service Requests", path: "/student/dashboard/services/requests" },
+            { label: "Service Requests", path: "/student/dashboard/your-requests" },
           { label: "Student Holidays", path: "/student/dashboard/holidays" },
           { label: "Mess Bill", path: "/student/dashboard/mess-bill" },
           { label: "Change password", path: "/student/dashboard/password" },
