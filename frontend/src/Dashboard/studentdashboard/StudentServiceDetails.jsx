@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 
 function StudentServiceDetails() {
   const { id } = useParams();
@@ -25,9 +27,15 @@ function StudentServiceDetails() {
     fetchService();
 
     // Fetch studentId from localStorage or from a JWT token if you store one
-    const sid = localStorage.getItem('studentId');
-    if (sid) {
-      setStudentId(sid);
+    const token = localStorage.getItem("Authorization");
+    console.log(token)
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log('Decoded token:', decoded);
+
+      const studentId = decoded?.id; 
+      setStudentId(studentId)// assuming your JWT payload has student object with an id
+      console.log('Student ID:', studentId);
     } else {
       // If you use JWT and store it, you might decode token here and get studentId
       // Or redirect user to login if no studentId is found

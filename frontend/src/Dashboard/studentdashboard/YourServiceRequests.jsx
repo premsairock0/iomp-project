@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 function YourServiceRequests() {
   const [requests, setRequests] = useState([]);
@@ -8,19 +11,24 @@ function YourServiceRequests() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const sid = localStorage.getItem('studentId');
+    const token = localStorage.getItem("Authorization");
 
-    if (!sid) {
+    if (!token) {
       setError('Student ID not found. Please login again.');
       setLoading(false);
       return;
     }
 
-    setStudentId(sid);
+          const decoded = jwtDecode(token);
+          console.log('Decoded token:', decoded);
+    
+          const studentId = decoded?.id; 
+          setStudentId(studentId)// assuming your JWT payload has student object with an id
+          console.log('Student ID:', studentId);
 
     const fetchRequests = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/dashstudent/service-requests?studentId=${sid}`);
+        const res = await axios.get(`http://localhost:3000/api/dashstudent/service-requests?studentId=${studentId}`);
         setRequests(res.data.requests);
       } catch (err) {
         console.error('Error fetching service requests:', err);
