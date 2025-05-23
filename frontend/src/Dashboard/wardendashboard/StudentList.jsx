@@ -4,6 +4,8 @@ import StudentTable from "./StudentTable";
 
 function StudentList() {
   const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [yearFilter, setYearFilter] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("Authorization");
 
@@ -27,6 +29,7 @@ function StudentList() {
         const data = await res.json();
         if (res.ok) {
           setStudents(data.students);
+          setFilteredStudents(data.students);
         } else {
           console.error("Failed to fetch students:", data.message);
         }
@@ -36,10 +39,93 @@ function StudentList() {
       });
   }, [navigate, token]);
 
+  const handleFilter = () => {
+    if (yearFilter.trim() === "") {
+      setFilteredStudents(students);
+      return;
+    }
+    const yearNumber = parseInt(yearFilter);
+    const filtered = students.filter((stu) => stu.year === yearNumber);
+    setFilteredStudents(filtered);
+  };
+
+  const handleReset = () => {
+    setYearFilter("");
+    setFilteredStudents(students);
+  };
+
   return (
-    <div>
-      <h2>Students Information</h2>
-      <StudentTable students={students} />
+    <div style={{ padding: "1.5rem 2rem", backgroundColor: "#f3f4f6", minHeight: "100vh" }}>
+      <h1
+        style={{
+          textAlign: "center",
+          fontWeight: "800",
+          fontSize: "2.2rem",
+          marginBottom: "1.8rem",
+          color: "#1f2937",
+          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        }}
+      >
+        Students Information
+      </h1>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "1rem",
+          marginBottom: "1.5rem",
+          flexWrap: "wrap",
+        }}
+      >
+        <input
+          type="number"
+          placeholder="Filter by Year"
+          value={yearFilter}
+          onChange={(e) => setYearFilter(e.target.value)}
+          min={1}
+          max={5}
+          style={{
+            padding: "0.5rem 0.75rem",
+            borderRadius: "6px",
+            border: "1px solid #d1d5db",
+            fontSize: "1rem",
+            width: "140px",
+          }}
+        />
+
+        <button
+          onClick={handleFilter}
+          style={{
+            padding: "0.5rem 1rem",
+            borderRadius: "6px",
+            border: "none",
+            backgroundColor: "#2563eb",
+            color: "white",
+            fontWeight: "600",
+            cursor: "pointer",
+          }}
+        >
+          Filter
+        </button>
+
+        <button
+          onClick={handleReset}
+          style={{
+            padding: "0.5rem 1rem",
+            borderRadius: "6px",
+            border: "1px solid #2563eb",
+            backgroundColor: "white",
+            color: "#2563eb",
+            fontWeight: "600",
+            cursor: "pointer",
+          }}
+        >
+          Reset
+        </button>
+      </div>
+
+      <StudentTable students={filteredStudents} />
     </div>
   );
 }
