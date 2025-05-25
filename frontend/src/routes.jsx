@@ -47,6 +47,8 @@ import StudentServices from './Dashboard/studentdashboard/StudentServices';
 import StudentServiceDetails from './Dashboard/studentdashboard/StudentServiceDetails';
 import YourServiceRequests from './Dashboard/studentdashboard/YourServiceRequests';
 import StudentRequests from './Dashboard/wardendashboard/StudentRequests';
+import Chefevent from './Dashboard/chefdashboard/Chefevent';
+import Chefeventdetails from './Dashboard/chefdashboard/Chefeventdetails';
 
 
 function AppRoutes() {
@@ -103,9 +105,11 @@ function AppRoutes() {
          <Route path="menu" element={<Menu/>} />
          <Route path="members" element={<Studentmembers/>} />
          <Route path="calender" element={<StudentHolidays/>}/>
-                    <Route path="password" element={<Chefpassword/>}/>
-
-      </Route>
+        <Route path="password" element={<Chefpassword/>}/>
+        <Route path="events" element={<Chefevent />}>
+    <Route path=":id" element={<Chefeventdetails />} />
+  </Route>
+       </Route>
 
       <Route path="/warden/dashboard" element={<WardenDashboard />}>
           <Route path="students" element={<StudentList />} />

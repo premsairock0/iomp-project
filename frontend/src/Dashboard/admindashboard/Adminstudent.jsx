@@ -75,7 +75,7 @@ function Adminstudent() {
           fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         }}
       >
-        All Students (Admin View)
+        All Students
       </h1>
 
       <div

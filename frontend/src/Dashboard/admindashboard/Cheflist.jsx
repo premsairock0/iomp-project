@@ -44,27 +44,30 @@ function Chef() {
     fetchChefs();
   }, []);
 
- 
-
   return (
-    <div className="p-6">
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h2 className="text-3xl font-semibold text-gray-800 text-center mb-6">
+        Chef List
+      </h2>
+
       {loading ? (
-        <p>Loading chefs...</p>
+        <p className="text-center text-gray-600">Loading chefs...</p>
       ) : error ? (
-        <p className="text-red-600">{error}</p>
+        <p className="text-center text-red-600 font-medium">{error}</p>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {chefs.length === 0 ? (
-            <p>No chefs found.</p>
+            <p className="text-center text-gray-500 col-span-full">No chefs found.</p>
           ) : (
             chefs.map((chef) => (
               <div
                 key={chef._id}
-                className="bg-white p-4 rounded shadow-md"
+                className="bg-white rounded-xl shadow-sm p-4 border hover:shadow-lg transition duration-200"
               >
-                {console.log(chef)}
-                <p><strong>ID:</strong> {chef._id}</p>
-                <p><strong>Chef Name:</strong> {chef.chef_name}</p>
+                <h4 className="text-lg font-bold text-green-700 mb-2">
+                  {chef.chef_name}
+                </h4>
+                <p className="text-sm text-gray-700"><strong>ID:</strong> {chef._id}</p>
               </div>
             ))
           )}

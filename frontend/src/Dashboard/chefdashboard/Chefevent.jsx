@@ -1,47 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
-import EventForm from "./EventForm"; // import your form component
 
-function Events() {
+function Chefevent() {
   const [events, setEvents] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
-
-  const fetchEvents = () => {
     axios.get("http://localhost:3000/api/event/getevent")
       .then(res => setEvents(res.data))
       .catch(err => console.error(err));
-  };
+  }, []);
 
-  const handleAddEventSuccess = () => {
-    setShowAddForm(false);
-    fetchEvents(); // refresh the event list
-  };
-
-  const isDetailPage = location.pathname !== "/admin/dashboard/events";
+  const isDetailPage = location.pathname !== "/chef/dashboard/events";
 
   return (
     <div className="p-6">
       {!isDetailPage && (
         <>
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">Events</h2>
-            <button
-              onClick={() => setShowAddForm(!showAddForm)}
-              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-            >
-              {showAddForm ? "Cancel" : "Add Event"}
-            </button>
-          </div>
-
-          {showAddForm && <EventForm onSuccess={handleAddEventSuccess} />}
-
+          <h2 className="text-2xl font-bold mb-6 mt-6">Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map(event => (
               <div
@@ -61,6 +39,7 @@ function Events() {
                   </div>
                 </div>
 
+                {/* Arrow icon container below content */}
                 <div className="p-4 flex justify-end">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -83,4 +62,15 @@ function Events() {
   );
 }
 
-export default Events;
+export default Chefevent;
+
+/* 
+Add this CSS somewhere in your global stylesheet if you don’t have Tailwind’s line-clamp plugin:
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+*/

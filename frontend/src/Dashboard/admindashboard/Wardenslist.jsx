@@ -44,43 +44,32 @@ function Warden() {
     fetchWardens();
   }, []);
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem('Authorization');
-  //   navigate('/');
-  // };
-
   return (
-    <div className="p-6">
-      {/* <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Warden Dashboard</h1>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
-      </div> */}
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h2 className="text-3xl font-semibold text-gray-800 text-center mb-6">
+        Warden List
+      </h2>
 
       {loading ? (
-        <p>Loading wardens...</p>
+        <p className="text-center text-gray-600">Loading wardens...</p>
       ) : error ? (
-        <p className="text-red-600">{error}</p>
+        <p className="text-center text-red-600 font-medium">{error}</p>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {wardens.length === 0 ? (
-            <p>No wardens found.</p>
+            <p className="text-center text-gray-500 col-span-full">No wardens found.</p>
           ) : (
             wardens.map((warden) => (
               <div
                 key={warden._id}
-                className="bg-white p-4 rounded shadow-md"
+                className="bg-white rounded-xl shadow-sm p-4 border hover:shadow-lg transition duration-200"
               >
-               {console.log(warden)} 
-                <p><strong>ID:</strong> {warden._id}</p>
-                <p><strong>Warden_name:</strong> {warden.warden_name}</p>
+                <h4 className="text-lg font-bold text-blue-700 mb-2">
+                  {warden.warden_name}
+                </h4>
+                <p className="text-sm text-gray-700"><strong>ID:</strong> {warden._id}</p>
               </div>
             ))
-            
           )}
         </div>
       )}

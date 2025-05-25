@@ -36,8 +36,11 @@ function Voting() {
       });
   }, [navigate, token]);
 
-  return(
-     <SelectVoters students={students} />
-  )
+  return (
+    <div className="container mt-5">
+      <SelectVoters students={students} />
+    </div>
+  );
 }
+
 export default Voting;
