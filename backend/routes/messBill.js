@@ -43,4 +43,35 @@ router.post("/pay", studentAuth, async (req, res) => {
   }
 });
 
+router.get("/status", studentAuth, async (req, res) => {
+  try {
+    const bill = await MessBill.findOne();
+
+    if (!bill) {
+      return res.status(404).json({ message: "Mess bill not found" });
+    }
+
+    res.status(200).json({ bill });
+  } catch (error) {
+    console.error("Error fetching mess bill:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ✅ Route to get all mess bills with student name, email, isPaid, and paymentDate
+router.get("/all", async (req, res) => {
+  try {
+    const bills = await MessBill.find()
+      .populate("student", "email username") // add username here
+      .select("student isPaid paymentDate"); // select only required fields
+
+    res.status(200).json({ bills });
+  } catch (error) {
+    console.error("Error fetching all mess bills:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
 module.exports = router;

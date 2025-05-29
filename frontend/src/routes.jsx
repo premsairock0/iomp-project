@@ -49,6 +49,7 @@ import YourServiceRequests from './Dashboard/studentdashboard/YourServiceRequest
 import StudentRequests from './Dashboard/wardendashboard/StudentRequests';
 import Chefevent from './Dashboard/chefdashboard/Chefevent';
 import Chefeventdetails from './Dashboard/chefdashboard/Chefeventdetails';
+import Messbill from './Dashboard/wardendashboard/Messbill'
 
 
 function AppRoutes() {
@@ -114,6 +115,7 @@ function AppRoutes() {
       <Route path="/warden/dashboard" element={<WardenDashboard />}>
           <Route path="students" element={<StudentList />} />
           <Route path="letters" element={<StudentLetters />} />
+          <Route path="mess-payment" element ={<Messbill />}/>
           <Route path="voting" element={<Voting />} />
            <Route path="voting-results" element={<VotingResults />} />
            <Route path="password" element={<Wardenpassword/>}/>
