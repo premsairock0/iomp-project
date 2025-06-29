@@ -49,7 +49,9 @@ import YourServiceRequests from './Dashboard/studentdashboard/YourServiceRequest
 import StudentRequests from './Dashboard/wardendashboard/StudentRequests';
 import Chefevent from './Dashboard/chefdashboard/Chefevent';
 import Chefeventdetails from './Dashboard/chefdashboard/Chefeventdetails';
-import Messbill from './Dashboard/wardendashboard/Messbill'
+import Messbill from './Dashboard/wardendashboard/Messbill' ;
+import PostNotification from './Dashboard/wardendashboard/PostNotification';
+import AdminNotifications from './Dashboard/admindashboard/AdminNotifications';
 
 
 function AppRoutes() {
@@ -66,6 +68,7 @@ function AppRoutes() {
        <Route path="wardenlist" element={<Wardenslist/>} />
         <Route path="cheflist" element={<Cheflist/>} />
          <Route path="members" element={<Memberslist/>} />
+       <Route path="notification" element={<AdminNotifications/>} />
          <Route path="uploadPhoto" element={<UploadPhoto/>} />
           <Route path="calender" element={<AdminHolidays/>}/>
       <Route path="password" element={<Changepassword/>}/>
@@ -118,6 +121,7 @@ function AppRoutes() {
           <Route path="mess-payment" element ={<Messbill />}/>
           <Route path="voting" element={<Voting />} />
            <Route path="voting-results" element={<VotingResults />} />
+           <Route path="notification" element={<PostNotification />} />
            <Route path="password" element={<Wardenpassword/>}/>
            <Route path="requests" element={<StudentRequests/>}/>
 

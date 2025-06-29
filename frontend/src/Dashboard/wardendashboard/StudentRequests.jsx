@@ -65,7 +65,7 @@ function StudentRequests() {
       <h1 className="text-2xl font-bold mb-6">Student Service Requests</h1>
 
       <section>
-        <h2 className="text-xl font-semibold text-yellow-600 mb-4">🕒 Pending Requests</h2>
+        <h2 className="text-xl font-semibold text-yellow-600 mb-4">Pending Requests</h2>
         {pendingRequests.length === 0 ? (
           <p className="text-gray-600">No pending requests.</p>
         ) : (
@@ -110,7 +110,7 @@ function StudentRequests() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-semibold text-green-600 mb-4">✅ Reviewed Requests</h2>
+        <h2 className="text-xl font-semibold text-green-600 mb-4">Reviewed Requests</h2>
         {reviewedRequests.length === 0 ? (
           <p className="text-gray-600">No reviewed requests.</p>
         ) : (

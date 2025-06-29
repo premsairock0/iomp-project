@@ -45,6 +45,7 @@ function Sidebar() {
           { label: "Chef List", path: "/admin/dashboard/cheflist" },
           { label: "Members", path: "/admin/dashboard/members" },
           { label: "Upload Photo", path: "/admin/dashboard/uploadPhoto" },
+         { label: "Notifications", path: "/admin/dashboard/notification" },
              { label: "Calender", path: "/admin/dashboard/calender" },
                 { label: "Change password", path: "/admin/dashboard/password" },
                   { label: "Events", path: "/admin/dashboard/events" },

@@ -44,6 +44,7 @@ function Sidebar() {
           { label: "Voting", path: "/warden/dashboard/voting" },
           { label: "Student Letters", path: "/warden/dashboard/letters" },
           { label: "Voting Results ", path: "/warden/dashboard/voting-results" },
+          { label: "Notifications", path: "/warden/dashboard/notification" },
           { label: "Change password", path: "/warden/dashboard/password" },
           { label: "Service requests", path: "/warden/dashboard/requests"},
           {label :"Mess payments",path:"/warden/dashboard/mess-payment"}
