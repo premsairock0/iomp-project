@@ -10,7 +10,7 @@ function StudentServices() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/dashstudent/services');
+        const res = await axios.get('https://jntuh-hostel-management.onrender.com/api/dashstudent/services');
         setServices(res.data.services);
       } catch (err) {
         console.error('Error fetching services:', err);

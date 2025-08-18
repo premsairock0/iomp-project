@@ -21,7 +21,7 @@ function Adminstudent() {
 
     const fetchStudents = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/admin/students", {
+        const response = await fetch("https://jntuh-hostel-management.onrender.com/api/admin/students", {
           method: "GET",
           headers: {
             Authorization: token,

@@ -17,7 +17,7 @@ function Studentmembers() {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/api/dashstudent/members', {
+        const response = await fetch('https://jntuh-hostel-management.onrender.com/api/dashstudent/members', {
           method: 'GET',
           headers: {
             Authorization: token,

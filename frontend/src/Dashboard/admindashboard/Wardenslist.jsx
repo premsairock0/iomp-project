@@ -18,7 +18,7 @@ function Warden() {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/api/admin/wardens', {
+        const response = await fetch('https://jntuh-hostel-management.onrender.com/api/admin/wardens', {
           method: 'GET',
           headers: {
             'Authorization': token,

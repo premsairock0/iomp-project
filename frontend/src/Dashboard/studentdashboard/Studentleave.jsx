@@ -19,7 +19,7 @@ const Studentleave = () => {
     if (!token) return;
 
     try {
-      const res = await fetch("http://localhost:3000/api/studentletters/myletters", {
+      const res = await fetch("https://jntuh-hostel-management.onrender.com/api/studentletters/myletters", {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const Studentleave = () => {
     setStatus(null);
 
     try {
-      const response = await fetch("http://localhost:3000/api/studentletters/", {
+      const response = await fetch("https://jntuh-hostel-management.onrender.com/api/studentletters/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

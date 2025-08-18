@@ -18,7 +18,7 @@ function Members() {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/api/dashadmin/members', {
+        const response = await fetch('https://jntuh-hostel-management.onrender.com/api/dashadmin/members', {
           method: 'GET',
           headers: {
             Authorization: token,

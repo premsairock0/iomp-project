@@ -6,7 +6,7 @@ export default function LatestUpdate() {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/photos");
+        const response = await fetch("https://jntuh-hostel-management.onrender.com/api/photos");
         const data = await response.json();
 
         if (Array.isArray(data)) {

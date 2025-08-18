@@ -17,7 +17,7 @@ function MessBill() {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/api/mess/status", {
+        const response = await fetch("https://jntuh-hostel-management.onrender.com/api/mess/status", {
           method: "GET",
           headers: {
             Authorization: token,
@@ -51,7 +51,7 @@ function MessBill() {
     const token = localStorage.getItem("Authorization");
 
     try {
-      const response = await fetch("http://localhost:3000/api/mess/pay", {
+      const response = await fetch("https://jntuh-hostel-management.onrender.com/api/mess/pay", {
         method: "POST",
         headers: {
           Authorization: token,

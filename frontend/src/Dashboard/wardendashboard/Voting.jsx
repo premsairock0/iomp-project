@@ -13,7 +13,7 @@ function Voting() {
       return;
     }
 
-    fetch("http://localhost:3000/api/dashwarden/students", {
+    fetch("https://jntuh-hostel-management.onrender.com/api/dashwarden/students", {
       headers: {
         Authorization: token,
       },

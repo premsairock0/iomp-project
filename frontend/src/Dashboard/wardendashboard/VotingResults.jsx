@@ -7,7 +7,7 @@ const VotingResults = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/vote/results");
+        const response = await fetch("https://jntuh-hostel-management.onrender.com/api/vote/results");
         const data = await response.json();
         setResults(data);
       } catch (error) {

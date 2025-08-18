@@ -50,7 +50,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/student/signup', {
+      const response = await fetch('https://jntuh-hostel-management.onrender.com/api/student/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

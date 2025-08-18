@@ -8,7 +8,7 @@ function Studentevents() {
   const location = useLocation();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/event/getevent")
+    axios.get("https://jntuh-hostel-management.onrender.com/api/event/getevent")
       .then(res => setEvents(res.data))
       .catch(err => console.error(err));
   }, []);

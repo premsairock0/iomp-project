@@ -5,7 +5,7 @@ function AdminHolidays() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/holidays/")
+    fetch("https://jntuh-hostel-management.onrender.com/api/holidays/")
       .then((res) => res.json())
       .then((data) => {
         setHolidays(data.holidays || []);

@@ -11,7 +11,7 @@ function ServiceDetails() {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/dashadmin/services/${id}`);
+        const res = await axios.get(`https://jntuh-hostel-management.onrender.com/api/dashadmin/services/${id}`);
         setService(res.data.service);
       } catch (err) {
         console.error('Error fetching service details:', err);

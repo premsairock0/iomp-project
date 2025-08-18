@@ -28,7 +28,7 @@ function YourServiceRequests() {
 
     const fetchRequests = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/dashstudent/service-requests?studentId=${studentId}`);
+        const res = await axios.get(`https://jntuh-hostel-management.onrender.com/api/dashstudent/service-requests?studentId=${studentId}`);
         setRequests(res.data.requests);
       } catch (err) {
         console.error('Error fetching service requests:', err);

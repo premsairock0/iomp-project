@@ -17,7 +17,7 @@ function StudentServiceDetails() {
     // Fetch service details
     const fetchService = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/dashstudent/services/${id}`);
+        const res = await axios.get(`https://jntuh-hostel-management.onrender.com/api/dashstudent/services/${id}`);
         setService(res.data.service);
       } catch (err) {
         console.error('Error fetching service details:', err);
@@ -60,7 +60,7 @@ function StudentServiceDetails() {
     setSubmitting(true);
 
     try {
-      await axios.post('http://localhost:3000/api/dashstudent/service-requests', {
+      await axios.post('https://jntuh-hostel-management.onrender.com/api/dashstudent/service-requests', {
         servicetitle: service.servicetitle,
         description: description.trim(),
         roomNo: roomNo.trim(),

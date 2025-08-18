@@ -9,7 +9,7 @@ export default function UploadPhoto() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/api/photos', { url: imageUrl });
+      const response = await axios.post('https://jntuh-hostel-management.onrender.com/api/photos', { url: imageUrl });
 
       if (response.status === 200 || response.status === 201) {
         setMessage('Photo uploaded successfully!');

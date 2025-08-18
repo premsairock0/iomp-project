@@ -16,7 +16,7 @@ function Profile() {
 
     const fetchProfile = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/student/me", {
+        const res = await fetch("https://jntuh-hostel-management.onrender.com/api/student/me", {
           headers: { Authorization: token },
         });
         const data = await res.json();

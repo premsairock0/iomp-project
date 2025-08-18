@@ -19,7 +19,7 @@ function AdminNotifications() {
       return;
     }
 
-    fetch("http://localhost:3000/api/admin/notifications", {
+    fetch("https://jntuh-hostel-management.onrender.com/api/admin/notifications", {
       headers: { Authorization: token },
     })
       .then((res) => res.json())
@@ -45,7 +45,7 @@ function AdminNotifications() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/admin/notifications", {
+      const res = await fetch("https://jntuh-hostel-management.onrender.com/api/admin/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ function AdminNotifications() {
     if (!window.confirm("Are you sure you want to close this notification?")) return;
     
     try {
-      const res = await fetch(`http://localhost:3000/api/admin/notifications/${id}/close`, {
+      const res = await fetch(`https://jntuh-hostel-management.onrender.com/api/admin/notifications/${id}/close`, {
         method: "PUT",
         headers: { Authorization: token },
       });

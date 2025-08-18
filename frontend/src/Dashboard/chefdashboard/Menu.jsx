@@ -15,7 +15,7 @@ function Menu() {
       return;
     }
 
-    fetch("http://localhost:3000/api/dashchef/menu", {
+    fetch("https://jntuh-hostel-management.onrender.com/api/dashchef/menu", {
       headers: {
         Authorization: token,
       },

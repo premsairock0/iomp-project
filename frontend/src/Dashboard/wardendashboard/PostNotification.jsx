@@ -19,7 +19,7 @@ function PostNotification() {
 
     const fetchNotifications = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/warden/notifications", {
+        const res = await fetch("https://jntuh-hostel-management.onrender.com/api/warden/notifications", {
           headers: {
             Authorization: token,
           },
@@ -54,7 +54,7 @@ function PostNotification() {
     setMessage(null);
 
     try {
-      const response = await fetch("http://localhost:3000/api/warden/notifications", {
+      const response = await fetch("https://jntuh-hostel-management.onrender.com/api/warden/notifications", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

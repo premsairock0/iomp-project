@@ -22,7 +22,7 @@ function AdminServices() {
 
   const fetchServices = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/dashadmin/services');
+      const res = await axios.get('https://jntuh-hostel-management.onrender.com/api/dashadmin/services');
       setServices(res.data.services);
     } catch (err) {
       console.error('Error fetching services:', err);
@@ -32,7 +32,7 @@ function AdminServices() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/dashadmin/services', formData);
+      await axios.post('https://jntuh-hostel-management.onrender.com/api/dashadmin/services', formData);
       fetchServices();
       setFormData({
         imgtitle: '',

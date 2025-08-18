@@ -14,7 +14,7 @@ function Notifications() {
       return;
     }
 
-    fetch("http://localhost:3000/api/student/notifications", {
+    fetch("https://jntuh-hostel-management.onrender.com/api/student/notifications", {
       headers: {
         Authorization: token,
       },

@@ -10,7 +10,7 @@ function Studenteventdetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/event/getevent/${id}`)
+      .get(`https://jntuh-hostel-management.onrender.com/api/event/getevent/${id}`)
       .then((res) => {
         setEvent(res.data);
         setLoading(false);

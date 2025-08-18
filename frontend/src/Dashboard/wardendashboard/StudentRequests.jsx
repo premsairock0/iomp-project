@@ -9,7 +9,7 @@ function StudentRequests() {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/dashwarden/service-requests');
+        const response = await axios.get('https://jntuh-hostel-management.onrender.com/api/dashwarden/service-requests');
         setRequests(response.data.requests || []);
       } catch (err) {
         console.error('Error fetching service requests:', err);
@@ -24,7 +24,7 @@ function StudentRequests() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:3000/api/dashwarden/service-requests/${id}`, {
+      await axios.put(`https://jntuh-hostel-management.onrender.com/api/dashwarden/service-requests/${id}`, {
         status: newStatus
       });
 

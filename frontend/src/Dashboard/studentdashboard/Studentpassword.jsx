@@ -17,7 +17,7 @@ const Studentpassword = () => {
     try {
       const token = localStorage.getItem('Authorization');
 
-      const response = await fetch('http://localhost:3000/api/dashstudent/change-password', {
+      const response = await fetch('https://jntuh-hostel-management.onrender.com/api/dashstudent/change-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

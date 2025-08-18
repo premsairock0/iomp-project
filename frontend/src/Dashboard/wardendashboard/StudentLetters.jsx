@@ -19,7 +19,7 @@ function StudentLetters() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/studentletters", {
+      const res = await fetch("https://jntuh-hostel-management.onrender.com/api/studentletters", {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ function StudentLetters() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/studentletters/${id}`, {
+      const res = await fetch(`https://jntuh-hostel-management.onrender.com/api/studentletters/${id}`, {
         method: "PUT",
         headers: {
           Authorization: token,

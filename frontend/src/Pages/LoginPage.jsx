@@ -11,7 +11,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/${role}/signin`, {
+      const response = await fetch(`https://jntuh-hostel-management.onrender.com/api/${role}/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

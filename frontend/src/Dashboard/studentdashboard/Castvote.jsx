@@ -6,7 +6,7 @@ const Castvote = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/selectedstudents")
+    fetch("https://jntuh-hostel-management.onrender.com/api/selectedstudents")
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -24,7 +24,7 @@ const Castvote = () => {
   const handleVote = async (candidateId) => {
     try {
       const token = localStorage.getItem("Authorization");
-      const response = await fetch("http://localhost:3000/api/vote", {
+      const response = await fetch("https://jntuh-hostel-management.onrender.com/api/vote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

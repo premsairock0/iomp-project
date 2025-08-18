@@ -15,7 +15,7 @@ function Studentmenu() {
       return;
     }
 
-    fetch("http://localhost:3000/api/dashstudent/menu", {
+    fetch("https://jntuh-hostel-management.onrender.com/api/dashstudent/menu", {
       headers: {
         Authorization: token,
       },

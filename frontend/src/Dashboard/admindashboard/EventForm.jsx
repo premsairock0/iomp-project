@@ -35,7 +35,7 @@ function EventForm({ onSuccess }) {
     setError(null);
 
     try {
-      await axios.post("http://localhost:3000/api/event/addevent", formData);
+      await axios.post("https://jntuh-hostel-management.onrender.com/api/event/addevent", formData);
       setLoading(false);
       onSuccess(); // notify parent to refresh list & hide form
       setFormData({

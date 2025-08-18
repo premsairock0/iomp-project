@@ -3,7 +3,7 @@ import React from "react";
 function SelectVoters({ students }) {
   const handleSelect = async (student) => {
     try {
-      const response = await fetch("http://localhost:3000/api/selectedstudents", {
+      const response = await fetch("https://jntuh-hostel-management.onrender.com/api/selectedstudents", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

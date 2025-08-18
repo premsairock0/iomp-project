@@ -18,7 +18,7 @@ function Chef() {
       }
 
       try {
-        const response = await fetch('http://localhost:3000/api/dashadmin/chefs', {
+        const response = await fetch('https://jntuh-hostel-management.onrender.com/api/dashadmin/chefs', {
           method: 'GET',
           headers: {
             'Authorization': token,

@@ -17,7 +17,7 @@ const Chefpassword = () => {
     try {
       const token = localStorage.getItem('Authorization');
 
-      const response = await fetch('http://localhost:3000/api/dashchef/change-password', {
+      const response = await fetch('https://jntuh-hostel-management.onrender.com/api/dashchef/change-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

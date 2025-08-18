@@ -6,7 +6,7 @@ function Messbill() {
   const [searchEmail, setSearchEmail] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/mess/all")
+    fetch("https://jntuh-hostel-management.onrender.com/api/mess/all")
       .then(async (res) => {
         const data = await res.json();
         console.log(data)
