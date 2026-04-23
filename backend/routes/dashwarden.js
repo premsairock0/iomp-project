@@ -9,6 +9,7 @@ const Warden = require('../models/warden');
 const bcrypt = require("bcrypt");
 // const Service = require('../models/service');
 const ServiceRequest = require("../models/request");
+const RoomRequest = require('../models/RoomRequest');
 
 
 
@@ -176,5 +177,40 @@ router.put("/change-password", wardenAuth, async (req, res) => {
   }
 });
 
+// GET /api/warden/room-requests
+router.get('/room-requests', async (req, res) => {
+  try {
+    const requests = await RoomRequest.find({}).populate('studentId', 'username email');
+    res.status(200).json({ requests });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching room requests', error: err.message });
+  }
+});
+
+// PUT /api/warden/room-requests/:id
+router.put('/room-requests/:id', async (req, res) => {
+  const { status, roomNo } = req.body;
+
+  if (!['Pending', 'Accepted', 'Rejected'].includes(status)) {
+    return res.status(400).json({ message: 'Invalid status value' });
+  }
+
+  try {
+    const request = await RoomRequest.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({ message: 'Room request not found' });
+    }
+
+    request.status = status;
+    if (status === 'Accepted' && roomNo) {
+      request.roomNo = roomNo;
+    }
+    await request.save();
+
+    res.status(200).json({ message: 'Room request status updated', request });
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating status', error: err.message });
+  }
+});
 
 module.exports = router;

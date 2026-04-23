@@ -10,6 +10,7 @@ const Warden = require('../models/warden');
 const Menu = require("../models/menu");
 const Service = require('../models/service');
 const ServiceRequest = require("../models/request");
+const RoomRequest = require('../models/RoomRequest');
 
 // GET all menus
 router.get("/menu", async (req, res) => {
@@ -82,6 +83,37 @@ router.get('/service-requests', async (req, res) => {
       return res.status(400).json({ message: 'Student ID missing in query' });
     }
     const requests = await ServiceRequest.find({ studentId }).sort({ createdAt: -1 });
+    res.status(200).json({ requests });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// POST /room-requests (Hostel Room Allotment)
+router.post('/room-requests', async (req, res) => {
+  try {
+    const { studentId, rollNo, incomeCertificate, nativePlace, distance } = req.body;
+    if (!studentId || !rollNo || !incomeCertificate || !nativePlace || !distance) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const request = new RoomRequest({ studentId, rollNo, incomeCertificate, nativePlace, distance });
+    await request.save();
+
+    res.status(201).json({ message: 'Room request submitted successfully', request });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// GET /room-requests
+router.get('/room-requests', async (req, res) => {
+  try {
+    const { studentId } = req.query;
+    if (!studentId) {
+      return res.status(400).json({ message: 'Student ID missing in query' });
+    }
+    const requests = await RoomRequest.find({ studentId }).sort({ createdAt: -1 });
     res.status(200).json({ requests });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

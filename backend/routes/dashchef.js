@@ -38,6 +38,23 @@ router.put("/menu/:day", verifyChefToken, async (req, res) => {
   }
 });
 
+// Delete a menu item by title (day)
+router.delete("/menu/:day", verifyChefToken, async (req, res) => {
+  const { day } = req.params;
+
+  try {
+    const deletedMenu = await Menu.findOneAndDelete({ title: day });
+
+    if (!deletedMenu) {
+      return res.status(404).json({ message: "Menu for the given day not found" });
+    }
+
+    res.status(200).json({ message: "Menu deleted successfully", menu: deletedMenu });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting menu", error: err.message });
+  }
+});
+
 router.put("/change-password", verifyChefToken, async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 

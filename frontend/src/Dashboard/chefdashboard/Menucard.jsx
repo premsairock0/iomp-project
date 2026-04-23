@@ -1,11 +1,27 @@
 import React, { useState } from "react";
 
-function Menucard({ menu }) {
+function Menucard({ menu, onDelete, onEdit }) {
   // Track expanded cards for Read More toggle
   const [expanded, setExpanded] = useState({});
+  const [editingItem, setEditingItem] = useState(null);
+  const [editForm, setEditForm] = useState({ description: "", photo: "" });
 
   const toggleExpand = (index) => {
     setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  const startEditing = (index, item) => {
+    setEditingItem(index);
+    setEditForm({ description: item.description || "", photo: item.photo || "" });
+  };
+
+  const handleSave = async (index, item) => {
+    if (onEdit) {
+      const success = await onEdit(item.title, editForm);
+      if (success) {
+        setEditingItem(null);
+      }
+    }
   };
 
   return (
@@ -38,26 +54,88 @@ function Menucard({ menu }) {
               </div>
             )}
             <div className="p-6 flex flex-col flex-grow">
-              {item.description && (
-                <>
-                  <p
-                    className={`text-gray-800 text-base leading-relaxed flex-grow transition-max-height duration-500 ease-in-out
-                      ${expanded[index] ? "max-h-[500px]" : "max-h-[5.5rem] overflow-hidden text-ellipsis"}`}
-                    style={{
-                      display: "-webkit-box",
-                      WebkitLineClamp: expanded[index] ? "unset" : 3,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
-                    {item.description}
-                  </p>
-                  {item.description.length > 120 && (
+              {editingItem === index ? (
+                <div className="flex flex-col gap-3">
+                  <input
+                    type="text"
+                    value={editForm.photo}
+                    onChange={(e) => setEditForm({...editForm, photo: e.target.value})}
+                    placeholder="Photo URL"
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <textarea
+                    value={editForm.description}
+                    onChange={(e) => setEditForm({...editForm, description: e.target.value})}
+                    placeholder="Description"
+                    rows={4}
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <div className="flex justify-end gap-2 mt-2">
                     <button
-                      onClick={() => toggleExpand(index)}
-                      className="mt-3 text-indigo-600 hover:text-indigo-800 font-semibold self-start"
+                      onClick={() => setEditingItem(null)}
+                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded font-semibold hover:bg-gray-300 transition"
                     >
-                      {expanded[index] ? "Show Less ▲" : "Read More ▼"}
+                      Cancel
                     </button>
+                    <button
+                      onClick={() => handleSave(index, item)}
+                      className="px-4 py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 transition"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {item.description && (
+                    <>
+                      <p
+                        className={`text-gray-800 text-base leading-relaxed flex-grow transition-max-height duration-500 ease-in-out
+                          ${expanded[index] ? "max-h-[500px]" : "max-h-[5.5rem] overflow-hidden text-ellipsis"}`}
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: expanded[index] ? "unset" : 3,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {item.description}
+                      </p>
+                      {item.description.length > 120 && (
+                        <button
+                          onClick={() => toggleExpand(index)}
+                          className="mt-3 text-indigo-600 hover:text-indigo-800 font-semibold self-start"
+                        >
+                          {expanded[index] ? "Show Less ▲" : "Read More ▼"}
+                        </button>
+                      )}
+                    </>
+                  )}
+                  {/* Action buttons */}
+                  {(onEdit || onDelete) && (
+                    <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-gray-100">
+                      {onEdit && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            startEditing(index, item);
+                          }}
+                          className="px-4 py-2 bg-indigo-100 text-indigo-700 font-semibold rounded hover:bg-indigo-200 transition duration-300"
+                        >
+                          Edit
+                        </button>
+                      )}
+                      {onDelete && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(item.title);
+                          }}
+                          className="px-4 py-2 bg-red-100 text-red-700 font-semibold rounded hover:bg-red-200 transition duration-300"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
                   )}
                 </>
               )}

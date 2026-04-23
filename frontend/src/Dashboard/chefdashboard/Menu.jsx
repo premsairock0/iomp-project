@@ -15,7 +15,7 @@ function Menu() {
       return;
     }
 
-    fetch("https://jntuh-hostel-management.onrender.com/api/dashchef/menu", {
+    fetch("http://localhost:3000/api/dashchef/menu", {
       headers: {
         Authorization: token,
       },
@@ -28,9 +28,6 @@ function Menu() {
           localStorage.removeItem("Authorization");
           navigate("/login/chef");
         } else if (res.ok) {
-          // === Changed this line ===
-          // Previously you used: setMenu(data.Menu || []);
-          // Now using data directly because backend sends array, not { Menu: [...] }
           setMenu(data.Menu || []);
         } else {
           console.error("Failed to fetch menu:", data.message);
@@ -44,6 +41,52 @@ function Menu() {
       });
   }, [navigate]);
 
+  const handleDelete = async (day) => {
+    const token = localStorage.getItem("Authorization");
+    if (!window.confirm(`Are you sure you want to delete the menu for ${day}?`)) return;
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/dashchef/menu/${day}`, {
+        method: "DELETE",
+        headers: { Authorization: token },
+      });
+      if (res.ok) {
+        setMenu(menu.filter((item) => item.title !== day));
+      } else {
+        const data = await res.json();
+        alert(`Failed to delete: ${data.message}`);
+      }
+    } catch (err) {
+      console.error("Error deleting menu:", err);
+    }
+  };
+
+  const handleEdit = async (day, updatedData) => {
+    const token = localStorage.getItem("Authorization");
+    try {
+      const res = await fetch(`http://localhost:3000/api/dashchef/menu/${day}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setMenu(menu.map((item) => (item.title === day ? data.menu : item)));
+        return true;
+      } else {
+        const data = await res.json();
+        alert(`Failed to update: ${data.message}`);
+        return false;
+      }
+    } catch (err) {
+      console.error("Error updating menu:", err);
+      return false;
+    }
+  };
+
   if (loading) return <p>Loading menu...</p>;
 
   return (
@@ -51,7 +94,7 @@ function Menu() {
     <h2 className="text-3xl font-bold text-indigo-700 mb-6 border-b-4 border-indigo-500 pb-2">
       Mess Menu
     </h2>
-    <Menucard menu={menu} />
+    <Menucard menu={menu} onDelete={handleDelete} onEdit={handleEdit} />
   </div>
   );
 }

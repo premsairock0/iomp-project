@@ -46,7 +46,9 @@ import ServiceDetails from './Dashboard/admindashboard/ServiceDetails';
 import StudentServices from './Dashboard/studentdashboard/StudentServices';
 import StudentServiceDetails from './Dashboard/studentdashboard/StudentServiceDetails';
 import YourServiceRequests from './Dashboard/studentdashboard/YourServiceRequests';
+import HostelRoom from './Dashboard/studentdashboard/HostelRoom';
 import StudentRequests from './Dashboard/wardendashboard/StudentRequests';
+import RoomRequests from './Dashboard/wardendashboard/RoomRequests';
 import Chefevent from './Dashboard/chefdashboard/Chefevent';
 import Chefeventdetails from './Dashboard/chefdashboard/Chefeventdetails';
 import Messbill from './Dashboard/wardendashboard/Messbill' ;
@@ -101,6 +103,7 @@ function AppRoutes() {
         <Route path="services" element={<StudentServices />} />
 <Route path="services/:id" element={<StudentServiceDetails />} />
 <Route path="your-requests" element={<YourServiceRequests />} />
+<Route path="hostel-room" element={<HostelRoom />} />
 
       </Route>
 
@@ -124,6 +127,7 @@ function AppRoutes() {
            <Route path="notification" element={<PostNotification />} />
            <Route path="password" element={<Wardenpassword/>}/>
            <Route path="requests" element={<StudentRequests/>}/>
+           <Route path="room-requests" element={<RoomRequests/>}/>
 
         </Route>
 

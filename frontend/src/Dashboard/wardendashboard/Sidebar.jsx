@@ -47,6 +47,7 @@ function Sidebar() {
           { label: "Notifications", path: "/warden/dashboard/notification" },
           { label: "Change password", path: "/warden/dashboard/password" },
           { label: "Service requests", path: "/warden/dashboard/requests"},
+          { label: "Room Requests", path: "/warden/dashboard/room-requests" },
           {label :"Mess payments",path:"/warden/dashboard/mess-payment"}
 
 
